@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{77ce98c1-31dd-4f96-b99e-117b1935b23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{02ce8429-f002-4cdd-9cad-65b7e476e17f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\db">
+      <UniqueIdentifier>{8f882552-0f19-4150-8909-2afa3ccb1302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\game">
+      <UniqueIdentifier>{423fbf31-84b0-4525-b314-038917769623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\db">
+      <UniqueIdentifier>{675fc4f5-de0c-497c-8782-a6726a930b5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\game">
+      <UniqueIdentifier>{fec8dbb5-d9cc-40aa-b058-955971747f4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\lua">
+      <UniqueIdentifier>{63e6973a-b6b8-4bae-86c6-96277c442096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\lua">
+      <UniqueIdentifier>{4dae7cbf-e0c3-430e-a8a2-ffd00079e1c7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\db\JME_MongoConnection.h">
+      <Filter>include\db</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\JME_Dispatcher.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\JME_GameEventCenter.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\JME_Random.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\JME_RPCManager.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\JME_ServerInterface.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\JME_Singleton.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\db\JME_MysqlConnection.h">
+      <Filter>include\db</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\db\JME_MongoConnection.cpp">
+      <Filter>source\db</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game\JME_RPCManager.cpp">
+      <Filter>source\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game\JME_ServerInterface.cpp">
+      <Filter>source\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\db\JME_MysqlConnection.cpp">
+      <Filter>source\db</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
