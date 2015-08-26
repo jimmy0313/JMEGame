@@ -10,11 +10,11 @@ MysqlConnector::MysqlConnector()
 
 	if ( mysql )
 	{
-		LogT <<	"Call mysql_init call succeeded" << LogEnd;		
+		LOGE("Call mysql_init call succeeded");
 	}
 	else
 	{
-		LogE <<	"call mysql_init call failed !!!" << LogEnd;		
+		LOGE("Call mysql_init call failed");
 	}
 }
 
@@ -34,18 +34,19 @@ bool MysqlConnector::connect()
 
 	if( mysql )
 	{
-		LogT <<	"Connect to mysql [ " << m_ip << ":" << m_port << "==>" << m_dbName << " ] succeed" << LogEnd;	
+		LOGT("Connect to mysql [ %s:%d==>%s ] succeed", m_ip, m_port, m_dbName);
 		// Set the utf8 query charset
 		int ret = mysql_real_query(&m_mysql,"set NAMES'utf8'",(unsigned int) strlen("set NAMES'utf8'"));
 		if( ret )
 		{
 			int qerrno = mysql_errno( &m_mysql );
-			LogE <<	"Set utf8 query charset failed with : " << qerrno << LogEnd;			
+			LOGE("Set utf8 query charset failed, error ==> [ %d ]", qerrno);			
 		}
 	}
 	else
 	{
-		LogE <<	"Connect to mysql [ " << m_ip << ":" << m_port << "==>" << m_dbName << " ] failed with : " << mysql_errno( &m_mysql ) << LogEnd;			
+		LOGT("Connect to mysql [ %s:%d==>%s ] failed, error ==> [ %d ]", m_ip, m_port, m_dbName, mysql_errno(&m_mysql));
+		
 		return false;
 	}
 	return true;
@@ -87,17 +88,17 @@ bool MysqlConnector::query( const char *sql )
 	if( ret )
 	{
 		int qerrno = mysql_errno( &m_mysql );
-		LogE << "Query [ " << sql << " ] call failed with: " << qerrno << LogEnd;		
+		LOGE("Query [ %s ] call failed, error ==> [ %d ]", sql, qerrno);		
 		if( qerrno == CR_SERVER_GONE_ERROR ) // MYSQL server timeout
 		{
-			LogT << "Trying to connect the server again.."<< LogEnd;
+			LOGT("Trying to connect the server again..");
 			if(connect())
 			{
 				ret = mysql_real_query( &m_mysql, sql, strlen( sql ) );
 				if( ret )
 				{
 					qerrno = mysql_errno( &m_mysql );
-					LogE << "Query [ " << sql << " ] call failed with: " << qerrno << LogEnd;		
+					LOGE("Query [ %s ] call failed, error ==> [ %d ]", sql, qerrno);		
 					return false;
 				}
 				else
@@ -130,7 +131,7 @@ MYSQL_RES* MysqlConnector::genRes()
 	m_queryRes = mysql_store_result( &m_mysql );
 	if( !m_queryRes )
 	{
-		LogE << "Call mysql_store_result failed" << LogEnd;
+		LOGE("Call mysql_store_result failed");
 		return NULL;
 	}
 	return m_queryRes;

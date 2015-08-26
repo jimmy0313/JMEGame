@@ -41,10 +41,10 @@ namespace JMEngine
 				size_t bufferSize = acceptConf["buffer_size"].asUInt();
 				_acceptorPtr->accept(0, bufferSize);
 
-				LogI << "Start accept connector on port{" << port << "}" << LogEnd;
+				LOGT("Start accept connector on port[ %s ]", port);
 			}
 
-			LogT << "Server [ " << _serverName << " ] start complete" << LogEnd;
+			LOGT("Start server [ %s ] complete", _serverName);
 		}
 
 		void JME_ServerInterface::init()

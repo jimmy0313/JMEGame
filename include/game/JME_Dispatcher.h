@@ -81,7 +81,7 @@ namespace JMEngine
 			auto res = _handleMap.insert(make_pair(msgId,handler)); 
 			if(!res.second)
 			{
-				LogE << "Message {" << msgId << "} had been registered" << LogEnd;
+				LOGE("Message [ %d ] had been registered", msgId);
 				abort();
 			}
 		}
@@ -96,7 +96,7 @@ namespace JMEngine
 			}
 			else
 			{
-				LogW << "Can't find message handler for msg {" << msgId << "}" << LogEnd;
+				LOGW("Can't find message handler for msg [ %d ]", msgId);
 			}
 		}
 

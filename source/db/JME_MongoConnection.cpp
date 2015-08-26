@@ -35,7 +35,7 @@ namespace JMEngine
 
 			if (!err.empty())
 			{
-				LogE << err << LogEnd;
+				LOGE(err);
 			}
 		}
 
@@ -46,7 +46,7 @@ namespace JMEngine
 
 			if (!err.empty())
 			{
-				LogE << err << LogEnd;
+				LOGE(err);
 			}
 		}
 
@@ -87,7 +87,7 @@ namespace JMEngine
 			string err = _conn.getLastError();
 			if ( !err.empty() )
 			{
-				LogE << err << LogEnd;
+				LOGE(err);
 			}
 		}
 	}
