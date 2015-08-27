@@ -10,7 +10,7 @@ MysqlConnector::MysqlConnector()
 
 	if ( mysql )
 	{
-		LOGE("Call mysql_init call succeeded");
+		LOGI("Call mysql_init call succeeded");
 	}
 	else
 	{
@@ -34,7 +34,7 @@ bool MysqlConnector::connect()
 
 	if( mysql )
 	{
-		LOGT("Connect to mysql [ %s:%d==>%s ] succeed", m_ip, m_port, m_dbName);
+		LOGI("Connect to mysql [ %s:%d==>%s ] succeed", m_ip, m_port, m_dbName);
 		// Set the utf8 query charset
 		int ret = mysql_real_query(&m_mysql,"set NAMES'utf8'",(unsigned int) strlen("set NAMES'utf8'"));
 		if( ret )
@@ -45,7 +45,7 @@ bool MysqlConnector::connect()
 	}
 	else
 	{
-		LOGT("Connect to mysql [ %s:%d==>%s ] failed, error ==> [ %d ]", m_ip, m_port, m_dbName, mysql_errno(&m_mysql));
+		LOGE("Connect to mysql [ %s:%d==>%s ] failed, error ==> [ %d ]", m_ip, m_port, m_dbName, mysql_errno(&m_mysql));
 		
 		return false;
 	}
