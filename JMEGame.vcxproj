@@ -43,7 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../JMEngine/include;../JMEngine/include/net;../JMEngine/include/log;../JMEngine/include/util;../JMEngine/include/json;../JMEngine/include/memory;../JMEngine/include/rpc;../JMEngine/include/db;include;include/db;include/game;include/db/mongodb;include/db/mysql/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../JMEngine/include;../JMEngine/include/net;../JMEngine/include/log;../JMEngine/include/util;../JMEngine/include/json;../JMEngine/include/memory;../JMEngine/include/rpc;../JMEngine/include/db;include;include/db;include/game;include/db/mongo;include/db/mysql/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
