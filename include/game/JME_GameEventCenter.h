@@ -213,7 +213,7 @@ namespace JMEngine
 			// Parameter: const T & evt
 			// Parameter: typename Observer::RemoteHandler handler
 			//************************************
-			void remoteEventCallback(const T& evt, , typename Observer::RemoteHandler handler)
+			void remoteEventCallback(const T& evt, typename Observer::RemoteHandler handler)
 			{
 				handler(evt);
 			}
