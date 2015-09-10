@@ -244,7 +244,7 @@ namespace JMEngine
 				handler(evt);
 			}
 
-		private:
+		protected:
 			EventMap _events;
 			boost::recursive_mutex	_eventMutex;
 		};
