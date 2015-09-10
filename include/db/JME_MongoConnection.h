@@ -52,8 +52,19 @@ namespace JMEngine
 			// Parameter: Json::Value * res
 			// Parameter: const mongo::BSONObj * fileds
 			//************************************
-
 			void selectJson(const string& dbName, const mongo::BSONObj& key, Json::Value* res, const mongo::BSONObj* fileds = NULL);
+
+			//************************************
+			// Method:    insertJsonObj
+			// FullName:  JMEngine::db::JME_MongoConnection::insertJsonObj
+			// Access:    public 
+			// Returns:   void
+			// Qualifier:
+			// Parameter: const string & dbName
+			// Parameter: const Json::Value & val
+			//************************************
+			void insertJsonObj(const string& dbName, const Json::Value& val);
+
 			//************************************
 			// Method:    insertBsonObj
 			// FullName:  JMEngine::db::JME_MongoConnection::insertBsonObj
@@ -63,8 +74,22 @@ namespace JMEngine
 			// Parameter: const string & dbName
 			// Parameter: const mongo::BSONObj & obj
 			//************************************
-
 			void insertBsonObj(const string& dbName, const mongo::BSONObj& obj);
+
+			//************************************
+			// Method:    updateJsonVal
+			// FullName:  JMEngine::db::JME_MongoConnection::updateJsonVal
+			// Access:    public 
+			// Returns:   void
+			// Qualifier:
+			// Parameter: const string & dbName
+			// Parameter: const mongo::BSONObj & key
+			// Parameter: const Json::Value & val
+			// Parameter: bool upsert
+			// Parameter: bool multi
+			//************************************
+			void updateJsonVal(const string& dbName, const mongo::BSONObj& key, const Json::Value& val, bool upsert = true, bool multi = false);
+
 			//************************************
 			// Method:    updateBsonVal
 			// FullName:  JMEngine::db::JME_MongoConnection::updateBsonVal
@@ -102,6 +127,20 @@ namespace JMEngine
 			// Parameter: int init
 			//************************************
 			int createAutoIncId(const string& dbName, const string& key, int init = 1);
+
+			//************************************
+			// Method:    findAndModify
+			// FullName:  JMEngine::db::JME_MongoConnection::findAndModify
+			// Access:    public 
+			// Returns:   void
+			// Qualifier:
+			// Parameter: const string & dbName
+			// Parameter: const string & table
+			// Parameter: const mongo::BSONObj & key
+			// Parameter: const mongo::BSONObj & query
+			// Parameter: bool upsert
+			//************************************
+			void findAndModify(const string& dbName, const string& table, const mongo::BSONObj& key, const mongo::BSONObj& query, bool upsert = true);
 		private:
 			mongo::DBClientConnection _conn;
 		};

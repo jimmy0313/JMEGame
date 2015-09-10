@@ -90,5 +90,51 @@ namespace JMEngine
 				LOGE(err);
 			}
 		}
+
+		void JME_MongoConnection::findAndModify(const string& dbName, const string& table, const mongo::BSONObj& key, const mongo::BSONObj& query, bool upsert /*= true*/)
+		{
+			mongo::BSONObj b;
+			mongo::BSONObjBuilder bj;  
+			bj.append("findAndModify", table);  
+			bj.append("query", key);
+
+			bj.append("update", query);  
+			bj.append("upsert", upsert);
+
+			_conn.runCommand(dbName, bj.obj(), b);
+		}
+
+		void JME_MongoConnection::insertJsonObj(const string& dbName, const Json::Value& val)
+		{
+			string strValue = val.toStyledString();
+			int	len = strValue.length();
+
+			try
+			{
+				mongo::BSONObj obj = mongo::fromjson(strValue.c_str(),&len);
+				insertBsonObj(dbName, obj);
+			}
+			catch(mongo::MsgAssertionException& e)
+			{
+				LOGE("Serialize json [ %s ] to bson failed ==> [ %s ]", strValue, e.what());
+			}
+		}
+
+		void JME_MongoConnection::updateJsonVal(const string& dbName, const mongo::BSONObj& key, const Json::Value& val, bool upsert /*= true*/, bool multi /*= false*/)
+		{
+			string strValue = val.toStyledString();
+			int	len = strValue.length();
+
+			try
+			{
+				mongo::BSONObj obj = mongo::fromjson(strValue.c_str(),&len);
+				updateBsonVal(dbName, key, obj, upsert, multi);
+			}
+			catch(mongo::MsgAssertionException& e)
+			{
+				LOGE("Serialize json [ %s ] to bson failed ==> [ %s ]", strValue, e.what());
+			}
+		}
+
 	}
 }
