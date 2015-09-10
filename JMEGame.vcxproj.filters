@@ -51,6 +51,9 @@
     <ClInclude Include="include\db\JME_MysqlConnection.h">
       <Filter>include\db</Filter>
     </ClInclude>
+    <ClInclude Include="include\game\JME_TimerTask.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\db\JME_MongoConnection.cpp">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="source\db\JME_MysqlConnection.cpp">
       <Filter>source\db</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game\JME_TimerTask.cpp">
+      <Filter>source\game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
