@@ -26,7 +26,6 @@ namespace JMEngine
 			//************************************
 			bool connect(const string& addr, string* err);
 
-
 			//************************************
 			// Method:    auth
 			// FullName:  JMEngine::db::JME_MongoConnection::auth
@@ -53,6 +52,18 @@ namespace JMEngine
 			// Parameter: const mongo::BSONObj * fileds
 			//************************************
 			void selectJson(const string& dbName, const mongo::BSONObj& key, Json::Value* res, const mongo::BSONObj* fileds = NULL);
+
+			//************************************
+			// Method:    selectMoreJson
+			// FullName:  JMEngine::db::JME_MongoConnection::selectMoreJson
+			// Access:    public 
+			// Returns:   void
+			// Qualifier:
+			// Parameter: const string & dbName
+			// Parameter: const mongo::BSONObj & key
+			// Parameter: Json::Value * res
+			//************************************
+			void selectMoreJson(const string& dbName, const mongo::BSONObj& key, Json::Value* res);
 
 			//************************************
 			// Method:    insertJsonObj
@@ -141,6 +152,16 @@ namespace JMEngine
 			// Parameter: bool upsert
 			//************************************
 			void findAndModify(const string& dbName, const string& table, const mongo::BSONObj& key, const mongo::BSONObj& query, bool upsert = true);
+
+			//************************************
+			// Method:    dropCollection
+			// FullName:  JMEngine::db::JME_MongoConnection::dropCollection
+			// Access:    public 
+			// Returns:   void
+			// Qualifier:
+			// Parameter: const string & collection
+			//************************************
+			void dropCollection(const string& collection);
 		private:
 			mongo::DBClientConnection _conn;
 		};

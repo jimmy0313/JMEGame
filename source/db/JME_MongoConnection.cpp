@@ -136,5 +136,23 @@ namespace JMEngine
 			}
 		}
 
+		void JME_MongoConnection::selectMoreJson(const string& dbName, const mongo::BSONObj& key, Json::Value* res)
+		{
+			mongo::auto_ptr<mongo::DBClientCursor> cursor = _conn.query(dbName, key);
+			while (cursor->more()) {
+				mongo::BSONObj obj = cursor->next();
+				string str = obj.jsonString();
+				Json::Reader reader;
+				Json::Value val;
+				reader.parse(str, val);
+				res->append( val );
+			}
+		}
+
+		void JME_MongoConnection::dropCollection(const string& collection)
+		{
+			_conn.dropCollection(collection);
+		}
+
 	}
 }
