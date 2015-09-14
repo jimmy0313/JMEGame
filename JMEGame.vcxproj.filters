@@ -54,6 +54,12 @@
     <ClInclude Include="include\game\JME_TimerTask.h">
       <Filter>include\game</Filter>
     </ClInclude>
+    <ClInclude Include="include\game\JME_Time.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\game\JME_SharedMemory.h">
+      <Filter>include\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\db\JME_MongoConnection.cpp">
@@ -69,6 +75,9 @@
       <Filter>source\db</Filter>
     </ClCompile>
     <ClCompile Include="source\game\JME_TimerTask.cpp">
+      <Filter>source\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game\JME_Time.cpp">
       <Filter>source\game</Filter>
     </ClCompile>
   </ItemGroup>

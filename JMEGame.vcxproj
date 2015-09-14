@@ -71,7 +71,9 @@
     <ClInclude Include="include\game\JME_Random.h" />
     <ClInclude Include="include\game\JME_RPCManager.h" />
     <ClInclude Include="include\game\JME_ServerInterface.h" />
+    <ClInclude Include="include\game\JME_SharedMemory.h" />
     <ClInclude Include="include\game\JME_Singleton.h" />
+    <ClInclude Include="include\game\JME_Time.h" />
     <ClInclude Include="include\game\JME_TimerTask.h" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +81,7 @@
     <ClCompile Include="source\db\JME_MysqlConnection.cpp" />
     <ClCompile Include="source\game\JME_RPCManager.cpp" />
     <ClCompile Include="source\game\JME_ServerInterface.cpp" />
+    <ClCompile Include="source\game\JME_Time.cpp" />
     <ClCompile Include="source\game\JME_TimerTask.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
