@@ -25,6 +25,22 @@ namespace JMEngine
 {
 	namespace game
 	{
+		class JME_RPCException
+		{
+		public:
+			explicit JME_RPCException(const string& err):
+			_err(err)
+			{
+			}
+			explicit JME_RPCException(const char* err):
+			_err(err)
+			{
+			}
+
+			const string& what() const { return _err; }
+		public:
+			string _err;
+		};
 		class JME_RPCManager
 		{
 		public:

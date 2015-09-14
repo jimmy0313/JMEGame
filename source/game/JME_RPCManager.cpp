@@ -20,7 +20,7 @@ namespace JMEngine
 		{
 			auto rpc = _rpcClient.find(server);
 			if (rpc == _rpcClient.end())
-				throw "can't find this rpc client";
+				throw JME_RPCException("can't find this rpc client");
 
 			return rpc->second;
 		}
