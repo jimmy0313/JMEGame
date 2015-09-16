@@ -25,6 +25,11 @@ namespace JMEngine
 			return rpc->second;
 		}
 
+		JME_RpcClient::JME_RpcClientPtr JME_RPCManager::getRpcClient(const string& server)
+		{
+			return getRpcClient(server.c_str());
+		}
+
 		void JME_RPCManager::initRpcServer(const Json::Value& conf)
 		{
 			if (conf.isMember("server"))

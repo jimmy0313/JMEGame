@@ -10,6 +10,9 @@
 
 #include "JME_Singleton.h"
 
+#include <string>
+
+using namespace std;
 using namespace JMEngine;
 using namespace JMEngine::net;
 using namespace JMEngine::rpc;
@@ -68,6 +71,8 @@ namespace JMEngine
 			void initRpcServer(const Json::Value& conf);
 
 			JME_RpcClient::JME_RpcClientPtr getRpcClient(const char* server);
+			JME_RpcClient::JME_RpcClientPtr getRpcClient(const string& server);
+
 		private:
 			map<string, JME_RpcClient::JME_RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
 
