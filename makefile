@@ -26,7 +26,9 @@
 					 JME_MongoConnection.cpp \
 					 JME_MysqlConnection.cpp \
 					 JME_RPCManager.cpp \
-					 JME_ServerInterface.cpp 
+					 JME_ServerInterface.cpp \
+					 JME_Time.cpp \
+					 JME_TimerTask.cpp 
 
                                 CFILES =  
 
