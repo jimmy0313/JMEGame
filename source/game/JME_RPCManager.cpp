@@ -1,5 +1,6 @@
 #include "JME_RPCManager.h"
 #include "json/json.h"
+#include "JME_String.h"
 
 namespace JMEngine
 {
@@ -20,7 +21,10 @@ namespace JMEngine
 		{
 			auto rpc = _rpcClient.find(server);
 			if (rpc == _rpcClient.end())
-				throw JME_RPCException("can't find this rpc client");
+			{
+				string err = JMEngine::tools::createString("Can't find rpc [ %s ]", server);
+				throw JME_RPCException(err);
+			}
 
 			return rpc->second;
 		}
