@@ -11,6 +11,7 @@
 #include "JME_Singleton.h"
 
 #include <string>
+#include "google/protobuf/message.h"
 
 using namespace std;
 using namespace JMEngine;
@@ -24,6 +25,7 @@ namespace Json
 }
 
 #define GETRPC(server) JMEngine::game::JME_RPCManager::getInstance()->getRpcClient(server)
+#define CALLMETHOD(server, method, rpc) JMEngine::game::JME_RPCManager::getInstance()->callServersMethod(server, method, rpc)
 namespace JMEngine
 {
 	namespace game
@@ -73,6 +75,7 @@ namespace JMEngine
 			JME_RpcClient::JME_RpcClientPtr getRpcClient(const char* server);
 			JME_RpcClient::JME_RpcClientPtr getRpcClient(const string& server);
 
+			void callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc);
 		private:
 			map<string, JME_RpcClient::JME_RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
 
