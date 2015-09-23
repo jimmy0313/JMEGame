@@ -27,7 +27,8 @@ namespace JMEngine
 
 		tm JME_Time::localTime(time_t t)
 		{
-			return boost::posix_time::to_tm(boost::posix_time::from_time_t(t));
+			tm * timeinfo = localtime(&t);
+			return *timeinfo;
 		}
 
 	}
