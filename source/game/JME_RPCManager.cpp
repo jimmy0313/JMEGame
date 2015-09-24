@@ -53,5 +53,15 @@ namespace JMEngine
 			}
 		}
 
+		void JME_RPCManager::callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc, JMEngine::rpc::JME_RpcCallback::RpcHandler cb)
+		{
+			for (auto it = _rpcClient.begin(); it != _rpcClient.end(); ++it)
+			{
+				if (it->first.find(server))
+					continue;
+				it->second->callRpcMethod(method, rpc, cb);
+			}
+		}
+
 	}
 }
