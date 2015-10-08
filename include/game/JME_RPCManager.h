@@ -11,6 +11,7 @@
 #include "JME_Singleton.h"
 
 #include <string>
+#include <vector>
 #include "google/protobuf/message.h"
 
 using namespace std;
@@ -25,8 +26,8 @@ namespace Json
 }
 
 #define GETRPC(server) JMEngine::game::JME_RPCManager::getInstance()->getRpcClient(server)
-#define CALLMETHOD(server, method, rpc) JMEngine::game::JME_RPCManager::getInstance()->callServersMethod(server, method, rpc)
-#define CALLMETHODCB(server, method, rpc, cb) JMEngine::game::JME_RPCManager::getInstance()->callServersMethod(server, method, rpc, cb)
+#define GETRPCCHANNEL(server) JMEngine::game::JME_RPCManager::getInstance()->getRpcChannel(server)
+
 namespace JMEngine
 {
 	namespace game
@@ -46,6 +47,22 @@ namespace JMEngine
 			const string& what() const { return _err; }
 		public:
 			string _err;
+		};
+
+		class JME_RPCManager;
+		class JME_RPCChannel
+		{
+		public:
+			friend class JME_RPCManager;
+
+			typedef boost::shared_ptr<JME_RPCChannel> JME_RPCChannelPtr;
+		public:
+			bool callRpcMethod(const char* method, const google::protobuf::Message* params);
+			bool callRpcMethod(const char* method, const google::protobuf::Message* params, JME_RpcCallback::RpcHandler cb);	//返回值为真 表示参数
+			bool callRpcMethod(const char* method, const google::protobuf::Message* params, JME_RpcCallback::RpcHandler cb, size_t dt, JME_RpcCallback::RpcDeadHandler dcb);	//返回值为真 表示参数
+
+		protected:
+			vector<JME_RpcClient::JME_RpcClientPtr> _clients;
 		};
 		class JME_RPCManager
 		{
@@ -76,8 +93,10 @@ namespace JMEngine
 			JME_RpcClient::JME_RpcClientPtr getRpcClient(const char* server);
 			JME_RpcClient::JME_RpcClientPtr getRpcClient(const string& server);
 
-			void callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc);
-			void callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc, JMEngine::rpc::JME_RpcCallback::RpcHandler cb);
+			JME_RPCChannel::JME_RPCChannelPtr getRpcChannel(const string& server);
+
+// 			void callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc);
+// 			void callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc, JMEngine::rpc::JME_RpcCallback::RpcHandler cb);
 		private:
 			map<string, JME_RpcClient::JME_RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
 
