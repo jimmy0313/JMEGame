@@ -1,7 +1,8 @@
 #JMEGame
 
-使用JMEngine编写网游服务器框架,包含如下内容
-所有测试代码省略一下代码片段
+使用JMEngine编写网游服务器框架,包含如下内容<br>
+所有测试代码省略一下代码片段<br>
+```cpp
 while (1)
 {
 	string cmd;
@@ -12,8 +13,9 @@ while (1)
 		break;
 	}
 }
-
-消息分发模块
+```
+消息分发模块<br>
+```cpp
 DispatchHandler.h
 
 #include "JME_Dispatcher.h"
@@ -40,11 +42,13 @@ void DispatchHandler::init()
 
 void DispatchHandler::requestLogin(int net, const google::protobuf::Message* params)
 {
-	
+
 }
+```
 
+游戏事件模块<br>
 
-游戏事件模块
+``cpp
 main.cpp
 
 #include "JME_GameEventCenter.h"
@@ -80,10 +84,12 @@ event [ test ] callback 1
 event [ test ] callback 2
 event [ test ] callback 3
 event [ test ] callback 2
+```
 
 时间相关函数
 
 定时器模块
+```cpp
 main.cpp 
 
 #include "JME_TimerTask.h"
@@ -110,5 +116,5 @@ run result:
 [2015-Nov-05 11:35:44] [f:\work\jmengine\testservers\client\src\main.cpp:79:cb4:00F86258] [TRACE] callbackAtTime callback
 [2015-Nov-05 11:35:44] [f:\work\jmengine\testservers\client\src\main.cpp:79:cb4:00F86258] [TRACE] callbackFromNow callback
 [2015-Nov-05 11:35:44] [f:\work\jmengine\testservers\client\src\main.cpp:79:cb4:00F86258] [TRACE] callbackByInterval callback
-
+```
 共享内存
