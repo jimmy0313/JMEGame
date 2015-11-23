@@ -8,7 +8,9 @@ namespace JMEngine
 
 		bool JME_Time::isTimeToday(time_t t)
 		{
-			auto ct = boost::posix_time::from_time_t(t);
+			tm timeinfo = *localtime(&t);
+
+			auto ct = boost::posix_time::ptime_from_tm(timeinfo);
 			auto nt = boost::posix_time::second_clock::local_time();
 
 			return ct.date() == nt.date();
