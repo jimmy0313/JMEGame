@@ -48,9 +48,10 @@ namespace JMEngine
 		{
 			if (!err)
 			{
-				cb(dt);
 				dt->expires_from_now(boost::posix_time::seconds(t));
 				dt->async_wait(boost::bind(JME_TimerTaskCenter::cycleTaskCallback, t, boost::asio::placeholders::error, dt, cb));
+
+				cb(dt);
 			}
 			else
 			{
