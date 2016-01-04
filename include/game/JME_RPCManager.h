@@ -94,9 +94,6 @@ namespace JMEngine
 			JME_RpcClient::JME_RpcClientPtr getRpcClient(const string& server);
 
 			JME_RPCChannel::JME_RPCChannelPtr getRpcChannel(const string& server);
-
-// 			void callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc);
-// 			void callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc, JMEngine::rpc::JME_RpcCallback::RpcHandler cb);
 		private:
 			map<string, JME_RpcClient::JME_RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
 

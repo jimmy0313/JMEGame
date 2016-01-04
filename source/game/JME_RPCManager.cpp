@@ -43,26 +43,6 @@ namespace JMEngine
 			}
 		}
 
-// 		void JME_RPCManager::callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc)
-// 		{
-// 			for (auto it = _rpcClient.begin(); it != _rpcClient.end(); ++it)
-// 			{
-// 				if (it->first.find(server))
-// 					continue;
-// 				it->second->callRpcMethod(method, rpc);
-// 			}
-// 		}
-// 
-// 		void JME_RPCManager::callServersMethod(const char* server, const char* method, const google::protobuf::Message* rpc, JMEngine::rpc::JME_RpcCallback::RpcHandler cb)
-// 		{
-// 			for (auto it = _rpcClient.begin(); it != _rpcClient.end(); ++it)
-// 			{
-// 				if (it->first.find(server))
-// 					continue;
-// 				it->second->callRpcMethod(method, rpc, cb);
-// 			}
-// 		}
-
 		JMEngine::game::JME_RPCChannel::JME_RPCChannelPtr JME_RPCManager::getRpcChannel(const string& server)
 		{
 			auto channel = boost::make_shared<JME_RPCChannel>();

@@ -15,7 +15,6 @@
 #include "boost/shared_ptr.hpp"
 #include "boost/thread/recursive_mutex.hpp"
 #include <string>
-#include "JME_Singleton.h"
 
 using namespace std;
 

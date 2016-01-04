@@ -11,9 +11,7 @@
 
 
 #include "boost/shared_ptr.hpp"
-#include <boost/thread/detail/singleton.hpp>
 
-#include "JME_TcpSession.h"
 namespace JMEngine
 {
 	namespace game

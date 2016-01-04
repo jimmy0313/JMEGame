@@ -14,7 +14,6 @@
 #include <random>
 #include <algorithm>
 #include <vector>
-#include "JME_Singleton.h"
 
 #include "boost/random.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
