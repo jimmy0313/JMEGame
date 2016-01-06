@@ -114,8 +114,13 @@ namespace JMEngine
 				boost::interprocess::shared_memory_object shm(boost::interprocess::open_only, name, mode);
 
 				auto mmap = new boost::interprocess::mapped_region(shm, mode);
+				if (sizeof(T) != mmap->get_size())
+				{
+					delete mmap;
+					boost::interprocess::shared_memory_object::remove(name);
+					return boost::shared_ptr<T>();
+				}
 				JMEngine::game::JME_SharedMemory<T>::saveMappedRegion(name, mmap);
-
 				auto ptr = boost::shared_ptr<T>(new(mmap->get_address()) T, boost::bind(JME_SharedMemory<T>::destory, _1, name));
 				return ptr;
 			}
