@@ -48,7 +48,7 @@ namespace JMEngine
 		template<class T>
 		typename JME_SharedMemory<T>::MappedRegion JME_SharedMemory<T>::_MappedRegion;
 		template<class T>
-		typename boost::mutex JME_SharedMemory<T>::_mutex;
+		typename boost::recursive_mutex JME_SharedMemory<T>::_mutex;
 
 		template<class T>
 		bool JMEngine::game::JME_SharedMemory<T>::existMappedRegion(const char* name)
