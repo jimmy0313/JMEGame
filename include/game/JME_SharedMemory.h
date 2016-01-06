@@ -32,7 +32,7 @@ namespace JMEngine
 			static boost::shared_ptr<T> create(boost::interprocess::open_only_t, const char* name, boost::interprocess::mode_t mode);
 
 		private:
-			static void destory(T* p, const char* name);
+			static void destory(const char* name, bool remove_memory);
 			static void saveMappedRegion(const char* name, boost::interprocess::mapped_region* mmap);
 			static void deleteMappedRegion(const char* name);
 			static bool existMappedRegion(const char* name);
@@ -72,10 +72,13 @@ namespace JMEngine
 		}
 
 		template<class T>
-		void JMEngine::game::JME_SharedMemory<T>::destory(T* p, const char* name)
+		void JMEngine::game::JME_SharedMemory<T>::destory(const char* name, bool remove_memory)
 		{
 			JMEngine::game::JME_SharedMemory<T>::deleteMappedRegion(name);
-			boost::interprocess::shared_memory_object::remove(name);
+			if (remove_memory)
+			{
+				boost::interprocess::shared_memory_object::remove(name);
+			}
 		}
 
 		template<class T>
@@ -89,7 +92,8 @@ namespace JMEngine
 				auto mmap = new boost::interprocess::mapped_region(shm, mode);
 				JMEngine::game::JME_SharedMemory<T>::saveMappedRegion(name, mmap);
 
-				auto ptr = boost::shared_ptr<T>(new(mmap->get_address()) T, boost::bind(JME_SharedMemory<T>::destory, _1, name));
+				//创建共享内存的才能去销毁共享内存
+				auto ptr = boost::shared_ptr<T>(new(mmap->get_address()) T, boost::bind(JME_SharedMemory<T>::destory, name, true));
 				return ptr;
 			}
 			catch(boost::interprocess::interprocess_exception& e)
@@ -121,7 +125,9 @@ namespace JMEngine
 					return boost::shared_ptr<T>();
 				}
 				JMEngine::game::JME_SharedMemory<T>::saveMappedRegion(name, mmap);
-				auto ptr = boost::shared_ptr<T>(new(mmap->get_address()) T, boost::bind(JME_SharedMemory<T>::destory, _1, name));
+
+				//打开共享内存的 无法销毁共享内存 只能移除在本进程中的映射
+				auto ptr = boost::shared_ptr<T>((T*)mmap->get_address(), boost::bind(JME_SharedMemory<T>::destory, name, false));
 				return ptr;
 			}
 			catch(boost::interprocess::interprocess_exception& e)
