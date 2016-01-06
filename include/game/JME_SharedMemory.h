@@ -35,11 +35,11 @@ namespace JMEngine
 			//主要用于logic，用于logic进程， 对数据进行修改
 			static boost::shared_ptr<T> create(boost::interprocess::open_only_t, const char* name, boost::interprocess::mode_t mode);
 
+			static bool existMappedRegion(const char* name);
 		private:
 			static void destory(const char* name, bool remove_memory);
 			static void saveMappedRegion(const char* name, boost::interprocess::mapped_region* mmap);
 			static void deleteMappedRegion(const char* name);
-			static bool existMappedRegion(const char* name);
 		private:
 			static boost::recursive_mutex _mutex;
 			static MappedRegion _MappedRegion;
