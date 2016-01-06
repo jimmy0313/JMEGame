@@ -14,6 +14,7 @@
 #include <string>
 #include "boost/interprocess/shared_memory_object.hpp"
 #include "boost/interprocess/mapped_region.hpp"
+#include "boost/thread/recursive_mutex.hpp"
 
 #include "JME_GLog.h"
 
@@ -40,15 +41,20 @@ namespace JMEngine
 			static void deleteMappedRegion(const char* name);
 			static bool existMappedRegion(const char* name);
 		private:
+			static boost::recursive_mutex _mutex;
 			static MappedRegion _MappedRegion;
 		};
 
 		template<class T>
 		typename JME_SharedMemory<T>::MappedRegion JME_SharedMemory<T>::_MappedRegion;
+		template<class T>
+		typename boost::mutex JME_SharedMemory<T>::_mutex;
 
 		template<class T>
 		bool JMEngine::game::JME_SharedMemory<T>::existMappedRegion(const char* name)
 		{
+			boost::recursive_mutex::scoped_lock lock(_mutex);
+
 			auto it = _MappedRegion.find(name);
 			if (it != _MappedRegion.end())
 				return true;
@@ -58,6 +64,8 @@ namespace JMEngine
 		template<class T>
 		void JMEngine::game::JME_SharedMemory<T>::deleteMappedRegion(const char* name)
 		{
+			boost::recursive_mutex::scoped_lock lock(_mutex);
+
 			auto it = _MappedRegion.find(name);
 			if (it != _MappedRegion.end())
 			{
@@ -71,6 +79,8 @@ namespace JMEngine
 		template<class T>
 		void JMEngine::game::JME_SharedMemory<T>::saveMappedRegion(const char* name, boost::interprocess::mapped_region* mmap)
 		{
+			boost::recursive_mutex::scoped_lock lock(_mutex);
+
 			auto result = _MappedRegion.insert(make_pair(name, mmap));
 		}
 
