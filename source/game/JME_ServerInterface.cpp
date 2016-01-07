@@ -1,4 +1,4 @@
-#include "JME_ServerInterface.h"
+#include "game/JME_ServerInterface.h"
 #include "JME_JsonFile.h"
 
 namespace JMEngine

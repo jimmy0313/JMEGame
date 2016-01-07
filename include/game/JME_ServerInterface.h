@@ -3,14 +3,13 @@
 
 #include "json/json.h"
 
-#include "JME_TcpSession.h"
-#include "JME_NetHandler.h"
-#include "JME_Dispatcher.h"
-#include "JME_Message.h"
-#include "JME_RpcClient.h"
-#include "JME_RpcServer.h"
-
-#include "JME_RPCManager.h"
+#include "net/JME_TcpSession.h"
+#include "net/JME_NetHandler.h"
+#include "net/JME_Message.h"
+#include "rpc/JME_RpcClient.h"
+#include "rpc/JME_RpcServer.h"
+#include "game/JME_Dispatcher.h"
+#include "game/JME_RPCManager.h"
 
 
 using namespace JMEngine;

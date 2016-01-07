@@ -1,5 +1,5 @@
-#include "JME_MongoConnection.h"
-#include "JME_GLog.h"
+#include "db/JME_MongoConnection.h"
+#include "log/JME_GLog.h"
 
 namespace JMEngine
 {

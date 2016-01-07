@@ -4,7 +4,7 @@
 #define JME_MysqlConnection_h__
 
 #include <string>
-#include "JME_DBPool.h"
+#include "db/JME_DBPool.h"
 
 #ifdef WIN32
 	#include "winsock2.h"
@@ -12,8 +12,8 @@
 #endif
 
 #ifdef WIN32
-	#include "mysql.h"
-	#include "errmsg.h"
+	#include "mysql/include/mysql.h"
+	#include "mysql/include/errmsg.h"
 #else
 	#include <mysql.h>
 	#include <errmsg.h>

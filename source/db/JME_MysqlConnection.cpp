@@ -1,4 +1,4 @@
-#include "JME_MysqlConnection.h"
+#include "db/JME_MysqlConnection.h"
 #include <stdio.h>
 #include <sstream>
 

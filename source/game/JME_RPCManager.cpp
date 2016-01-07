@@ -1,6 +1,6 @@
-#include "JME_RPCManager.h"
+#include "game/JME_RPCManager.h"
 #include "json/json.h"
-#include "JME_String.h"
+#include "util/JME_String.h"
 
 namespace JMEngine
 {

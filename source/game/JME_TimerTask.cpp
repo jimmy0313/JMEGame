@@ -1,5 +1,5 @@
-#include "JME_TimerTask.h"
-#include "JME_Core.h"
+#include "game/JME_TimerTask.h"
+#include "net/JME_Core.h"
 
 #include "boost/make_shared.hpp"
 
