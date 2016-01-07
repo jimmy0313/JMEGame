@@ -12,8 +12,8 @@
 #endif
 
 #ifdef WIN32
-	#include "mysql/include/mysql.h"
-	#include "mysql/include/errmsg.h"
+	#include "mysql.h"
+	#include "errmsg.h"
 #else
 	#include <mysql.h>
 	#include <errmsg.h>

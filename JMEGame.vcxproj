@@ -43,7 +43,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../JMEngine/include;../JMEngine/include/json;include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../JMEngine/include;../JMEngine/include/json;include;include/db/mongo;include/db/mysql/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

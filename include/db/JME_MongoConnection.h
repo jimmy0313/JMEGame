@@ -1,7 +1,7 @@
 #ifndef JME_MongoConnection_h__
 #define JME_MongoConnection_h__
 
-#include "db/mongo/client/dbclient.h"
+#include "client/dbclient.h"
 #include "json/json.h"
 
 #include <string>
