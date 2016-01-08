@@ -20,14 +20,14 @@ namespace JMEngine
 		class DispatcherInterface
 		{
 		public:
-			typedef boost::shared_ptr<DispatcherInterface> JME_DispatcherPtr;
+			typedef boost::shared_ptr<DispatcherInterface> DispatcherPtr;
 			typedef boost::function<void(const T1 client/*指定客户端的代表，可以是一个session， 也可以是一个id，或者一个字符串*/, const T2 params)> MessageHandler;
 			typedef map<int, MessageHandler> MessageHandlerMap;
 		public:
 
 			//************************************
 			// Method:    regMessageHandler
-			// FullName:  JMEngine::game::JME_Dispatcher<T>::regMessageHandler
+			// FullName:  JMEngine::game::Dispatcher<T>::regMessageHandler
 			// Access:    public static 
 			// Returns:   void
 			// Qualifier: reg handler for msgId
@@ -38,7 +38,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    regMessageHandler
-			// FullName:  JMEngine::game::JME_Dispatcher<T>::regMessageHandler
+			// FullName:  JMEngine::game::Dispatcher<T>::regMessageHandler
 			// Access:    public static 
 			// Returns:   void
 			// Qualifier: reg handler from beginMsg to endMsg
@@ -50,12 +50,12 @@ namespace JMEngine
 			static void regMessageHandler(int beginMsg, int endMsg, MessageHandler handler);
 			//************************************
 			// Method:    execMessageHandler
-			// FullName:  JMEngine::game::JME_Dispatcher<T>::execMessageHandler
+			// FullName:  JMEngine::game::Dispatcher<T>::execMessageHandler
 			// Access:    public static 
 			// Returns:   void
 			// Qualifier: call msg handler for msgId
 			// Parameter: int msgId
-			// Parameter: JMEngine::net::JME_TcpSessionPtr session
+			// Parameter: JMEngine::net::TcpSessionPtr session
 			// Parameter: const T & params
 			//************************************
 			static void execMessageHandler(int msgId, const T1 client, const T2 params);

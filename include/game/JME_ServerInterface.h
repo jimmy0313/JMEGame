@@ -29,7 +29,7 @@ namespace JMEngine
 		private:
 			//************************************
 			// Method:    init
-			// FullName:  JMEngine::game::JME_ServerInterface::init
+			// FullName:  JMEngine::game::ServerInterface::init
 			// Access:    virtual public 
 			// Returns:   void
 			// Qualifier: 逻辑服务器进行一些初始化， 例如数据库等
@@ -38,7 +38,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    init_
-			// FullName:  JMEngine::game::JME_ServerInterface::init_
+			// FullName:  JMEngine::game::ServerInterface::init_
 			// Access:    public 
 			// Returns:   void
 			// Qualifier: 初始化各种连接， 必须在 各个handler初始化完毕后调用
@@ -53,7 +53,7 @@ namespace JMEngine
 			Json::Value _config;
 
 			// 主要用于网关服务器， 接受客户端连接
-			TcpAcceptor::JME_TcpAcceptorPtr _acceptorPtr;
+			TcpAcceptor::TcpAcceptorPtr _acceptorPtr;
 			NetHandler::NetHandlerPtr _clientHandler;	//主动连接我的“客户端”的请求消息处理
 		};
 	}

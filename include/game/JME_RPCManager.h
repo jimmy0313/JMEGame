@@ -24,8 +24,8 @@ namespace Json
 	class Value;
 }
 
-#define GETRPC(server) JMEngine::game::JME_RPCManager::getInstance()->getRpcClient(server)
-#define GETRPCCHANNEL(server) JMEngine::game::JME_RPCManager::getInstance()->getRpcChannel(server)
+#define GETRPC(server) JMEngine::game::RPCManager::getInstance()->getRpcClient(server)
+#define GETRPCCHANNEL(server) JMEngine::game::RPCManager::getInstance()->getRpcChannel(server)
 
 namespace JMEngine
 {
@@ -49,19 +49,19 @@ namespace JMEngine
 		};
 
 		class RPCManager;
-		class JME_RPCChannel
+		class RPCChannel
 		{
 		public:
 			friend class RPCManager;
 
-			typedef boost::shared_ptr<JME_RPCChannel> JME_RPCChannelPtr;
+			typedef boost::shared_ptr<RPCChannel> RPCChannelPtr;
 		public:
 			bool callRpcMethod(const char* method, const google::protobuf::Message* params);
 			bool callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb);	//返回值为真 表示参数
 			bool callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb, size_t dt, RpcCallback::RpcDeadHandler dcb);	//返回值为真 表示参数
 
 		protected:
-			vector<RpcClient::JME_RpcClientPtr> _clients;
+			vector<RpcClient::RpcClientPtr> _clients;
 		};
 		class RPCManager
 		{
@@ -70,7 +70,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    initRpcClient
-			// FullName:  JMEngine::game::JME_RPCManager::initRpcClient
+			// FullName:  JMEngine::game::RPCManager::initRpcClient
 			// Access:    public 
 			// Returns:   void
 			// Qualifier: 为了方便起见， 初始化rpc客户端放在服务器初始化第一步， 尝试连接rpc服务器
@@ -81,7 +81,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    initRpcServer
-			// FullName:  JMEngine::game::JME_RPCManager::initRpcServer
+			// FullName:  JMEngine::game::RPCManager::initRpcServer
 			// Access:    public 
 			// Returns:   void
 			// Qualifier: rpc服务器监听 放在服务器初始化第三步， 在rpc函数注册完毕后进行
@@ -89,12 +89,12 @@ namespace JMEngine
 			//************************************
 			void initRpcServer(const Json::Value& conf);
 
-			RpcClient::JME_RpcClientPtr getRpcClient(const char* server);
-			RpcClient::JME_RpcClientPtr getRpcClient(const string& server);
+			RpcClient::RpcClientPtr getRpcClient(const char* server);
+			RpcClient::RpcClientPtr getRpcClient(const string& server);
 
-			JME_RPCChannel::JME_RPCChannelPtr getRpcChannel(const string& server);
+			RPCChannel::RPCChannelPtr getRpcChannel(const string& server);
 		private:
-			map<string, RpcClient::JME_RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
+			map<string, RpcClient::RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
 
 			RpcServer::RpcServerPtr _rpcServer;
 		};

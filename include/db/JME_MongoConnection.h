@@ -17,7 +17,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    connect
-			// FullName:  JMEngine::db::JME_MongoConnection::connect
+			// FullName:  JMEngine::db::MongoConnection::connect
 			// Access:    public 
 			// Returns:   bool, succeed ==> true, failed ==> false
 			// Qualifier:
@@ -28,7 +28,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    auth
-			// FullName:  JMEngine::db::JME_MongoConnection::auth
+			// FullName:  JMEngine::db::MongoConnection::auth
 			// Access:    public 
 			// Returns:   bool, succeed ==> true, failed ==> false
 			// Qualifier:
@@ -42,7 +42,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    selectJson
-			// FullName:  JMEngine::db::JME_MongoConnection::selectJson
+			// FullName:  JMEngine::db::MongoConnection::selectJson
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -55,7 +55,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    selectMoreJson
-			// FullName:  JMEngine::db::JME_MongoConnection::selectMoreJson
+			// FullName:  JMEngine::db::MongoConnection::selectMoreJson
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -67,7 +67,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    insertJsonObj
-			// FullName:  JMEngine::db::JME_MongoConnection::insertJsonObj
+			// FullName:  JMEngine::db::MongoConnection::insertJsonObj
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -78,7 +78,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    insertBsonObj
-			// FullName:  JMEngine::db::JME_MongoConnection::insertBsonObj
+			// FullName:  JMEngine::db::MongoConnection::insertBsonObj
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -89,7 +89,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    updateJsonVal
-			// FullName:  JMEngine::db::JME_MongoConnection::updateJsonVal
+			// FullName:  JMEngine::db::MongoConnection::updateJsonVal
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -103,7 +103,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    updateBsonVal
-			// FullName:  JMEngine::db::JME_MongoConnection::updateBsonVal
+			// FullName:  JMEngine::db::MongoConnection::updateBsonVal
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -117,7 +117,7 @@ namespace JMEngine
 			
 			//************************************
 			// Method:    removeBson
-			// FullName:  JMEngine::db::JME_MongoConnection::removeBson
+			// FullName:  JMEngine::db::MongoConnection::removeBson
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -129,7 +129,7 @@ namespace JMEngine
 			
 			//************************************
 			// Method:    createAutoIncId
-			// FullName:  JMEngine::db::JME_MongoConnection::createAutoIncId
+			// FullName:  JMEngine::db::MongoConnection::createAutoIncId
 			// Access:    public 
 			// Returns:   int, 0 ==> error
 			// Qualifier:
@@ -141,7 +141,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    findAndModify
-			// FullName:  JMEngine::db::JME_MongoConnection::findAndModify
+			// FullName:  JMEngine::db::MongoConnection::findAndModify
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:
@@ -155,7 +155,7 @@ namespace JMEngine
 
 			//************************************
 			// Method:    dropCollection
-			// FullName:  JMEngine::db::JME_MongoConnection::dropCollection
+			// FullName:  JMEngine::db::MongoConnection::dropCollection
 			// Access:    public 
 			// Returns:   void
 			// Qualifier:

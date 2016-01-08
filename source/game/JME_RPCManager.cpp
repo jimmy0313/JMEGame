@@ -17,7 +17,7 @@ namespace JMEngine
 			}
 		}
 
-		RpcClient::JME_RpcClientPtr RPCManager::getRpcClient(const char* server)
+		RpcClient::RpcClientPtr RPCManager::getRpcClient(const char* server)
 		{
 			auto rpc = _rpcClient.find(server);
 			if (rpc == _rpcClient.end())
@@ -29,7 +29,7 @@ namespace JMEngine
 			return rpc->second;
 		}
 
-		RpcClient::JME_RpcClientPtr RPCManager::getRpcClient(const string& server)
+		RpcClient::RpcClientPtr RPCManager::getRpcClient(const string& server)
 		{
 			return getRpcClient(server.c_str());
 		}
@@ -43,9 +43,9 @@ namespace JMEngine
 			}
 		}
 
-		JMEngine::game::JME_RPCChannel::JME_RPCChannelPtr RPCManager::getRpcChannel(const string& server)
+		JMEngine::game::RPCChannel::RPCChannelPtr RPCManager::getRpcChannel(const string& server)
 		{
-			auto channel = boost::make_shared<JME_RPCChannel>();
+			auto channel = boost::make_shared<RPCChannel>();
 			for (auto it = _rpcClient.begin(); it != _rpcClient.end(); ++it)
 			{
 				if (it->first.find(server))
@@ -56,7 +56,7 @@ namespace JMEngine
 		}
 
 
-		bool JME_RPCChannel::callRpcMethod(const char* method, const google::protobuf::Message* params)
+		bool RPCChannel::callRpcMethod(const char* method, const google::protobuf::Message* params)
 		{
 			for (auto client : _clients)
 			{
@@ -65,7 +65,7 @@ namespace JMEngine
 			return true;
 		}
 
-		bool JME_RPCChannel::callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb)
+		bool RPCChannel::callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb)
 		{
 			for (auto client : _clients)
 			{
@@ -74,7 +74,7 @@ namespace JMEngine
 			return true;
 		}
 
-		bool JME_RPCChannel::callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb, size_t dt, RpcCallback::RpcDeadHandler dcb)
+		bool RPCChannel::callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb, size_t dt, RpcCallback::RpcDeadHandler dcb)
 		{
 			for (auto client : _clients)
 			{
