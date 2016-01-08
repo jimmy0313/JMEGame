@@ -11,7 +11,7 @@ namespace JMEngine
 	namespace game
 	{
 
-		class JME_TimerTaskCenter
+		class TimerTaskCenter
 		{
 		public:
 			//************************************

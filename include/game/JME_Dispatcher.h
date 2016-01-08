@@ -17,10 +17,10 @@ namespace JMEngine
 	namespace game
 	{
 		template<class T1, class T2>
-		class JME_Dispatcher
+		class DispatcherInterface
 		{
 		public:
-			typedef boost::shared_ptr<JME_Dispatcher> JME_DispatcherPtr;
+			typedef boost::shared_ptr<DispatcherInterface> JME_DispatcherPtr;
 			typedef boost::function<void(const T1 client/*指定客户端的代表，可以是一个session， 也可以是一个id，或者一个字符串*/, const T2 params)> MessageHandler;
 			typedef map<int, MessageHandler> MessageHandlerMap;
 		public:
@@ -65,7 +65,7 @@ namespace JMEngine
 		};
 
 		template<class T1, class T2>
-		void JMEngine::game::JME_Dispatcher<T1, T2>::regMessageHandler( int beginMsg, int endMsg, MessageHandler handler )
+		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int beginMsg, int endMsg, MessageHandler handler )
 		{
 			for (int i = beginMsg; i <= endMsg; i++)
 			{
@@ -74,7 +74,7 @@ namespace JMEngine
 		}
 
 		template<class T1, class T2>
-		void JMEngine::game::JME_Dispatcher<T1, T2>::regMessageHandler( int msgId, MessageHandler handler )
+		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int msgId, MessageHandler handler )
 		{
 			auto res = _handleMap.insert(make_pair(msgId,handler)); 
 			if(!res.second)
@@ -85,7 +85,7 @@ namespace JMEngine
 		}
 
 		template<class T1, class T2>
-		void JMEngine::game::JME_Dispatcher<T1, T2>::execMessageHandler( int msgId, const T1 client, const T2 params )
+		void JMEngine::game::DispatcherInterface<T1, T2>::execMessageHandler( int msgId, const T1 client, const T2 params )
 		{
 			auto it = _handleMap.find(msgId);
 			if(it != _handleMap.end())
@@ -99,7 +99,7 @@ namespace JMEngine
 		}
 
 		template<class T1, class T2>
-		typename JME_Dispatcher<T1, T2>::MessageHandlerMap JME_Dispatcher<T1, T2>::_handleMap;
+		typename DispatcherInterface<T1, T2>::MessageHandlerMap DispatcherInterface<T1, T2>::_handleMap;
 	}
 }
 #endif // JME_Dispatcher_h__

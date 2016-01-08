@@ -24,7 +24,7 @@ namespace JMEngine
 	namespace game
 	{
 		template<class T>
-		class JME_SharedMemory
+		class SharedMemory
 		{
 		public:
 			typedef map<string, boost::interprocess::mapped_region*> MappedRegion;
@@ -46,12 +46,12 @@ namespace JMEngine
 		};
 
 		template<class T>
-		typename JME_SharedMemory<T>::MappedRegion JME_SharedMemory<T>::_MappedRegion;
+		typename SharedMemory<T>::MappedRegion SharedMemory<T>::_MappedRegion;
 		template<class T>
-		typename boost::recursive_mutex JME_SharedMemory<T>::_mutex;
+		typename boost::recursive_mutex SharedMemory<T>::_mutex;
 
 		template<class T>
-		bool JMEngine::game::JME_SharedMemory<T>::existMappedRegion(const char* name)
+		bool JMEngine::game::SharedMemory<T>::existMappedRegion(const char* name)
 		{
 			boost::recursive_mutex::scoped_lock lock(_mutex);
 
@@ -62,7 +62,7 @@ namespace JMEngine
 		}
 
 		template<class T>
-		void JMEngine::game::JME_SharedMemory<T>::deleteMappedRegion(const char* name)
+		void JMEngine::game::SharedMemory<T>::deleteMappedRegion(const char* name)
 		{
 			boost::recursive_mutex::scoped_lock lock(_mutex);
 
@@ -77,7 +77,7 @@ namespace JMEngine
 		}
 
 		template<class T>
-		void JMEngine::game::JME_SharedMemory<T>::saveMappedRegion(const char* name, boost::interprocess::mapped_region* mmap)
+		void JMEngine::game::SharedMemory<T>::saveMappedRegion(const char* name, boost::interprocess::mapped_region* mmap)
 		{
 			boost::recursive_mutex::scoped_lock lock(_mutex);
 
@@ -85,9 +85,9 @@ namespace JMEngine
 		}
 
 		template<class T>
-		void JMEngine::game::JME_SharedMemory<T>::destory(const char* name, bool remove_memory)
+		void JMEngine::game::SharedMemory<T>::destory(const char* name, bool remove_memory)
 		{
-			JMEngine::game::JME_SharedMemory<T>::deleteMappedRegion(name);
+			JMEngine::game::SharedMemory<T>::deleteMappedRegion(name);
 			if (remove_memory)
 			{
 				boost::interprocess::shared_memory_object::remove(name);
@@ -95,12 +95,12 @@ namespace JMEngine
 		}
 
 		template<class T>
-		boost::shared_ptr<T> JMEngine::game::JME_SharedMemory<T>::create(boost::interprocess::create_only_t, const char* name, boost::interprocess::mode_t mode)
+		boost::shared_ptr<T> JMEngine::game::SharedMemory<T>::create(boost::interprocess::create_only_t, const char* name, boost::interprocess::mode_t mode)
 		{
 			try
 			{
 				//移除可能存在老共享内存
-				JMEngine::game::JME_SharedMemory<T>::deleteMappedRegion(name);
+				JMEngine::game::SharedMemory<T>::deleteMappedRegion(name);
 				boost::interprocess::shared_memory_object::remove(name);
 
 				//创建新的共享内存, 并分配大小
@@ -111,11 +111,11 @@ namespace JMEngine
 				auto mmap = new boost::interprocess::mapped_region(shm, mode);
 
 				//保存内存映射信息
-				JMEngine::game::JME_SharedMemory<T>::saveMappedRegion(name, mmap);
+				JMEngine::game::SharedMemory<T>::saveMappedRegion(name, mmap);
 
 				//通过共享内存 创建shared_ptr<T>对象
 				//共享内存， 谁创建， 谁销毁
-				auto ptr = boost::shared_ptr<T>(new(mmap->get_address()) T, boost::bind(JME_SharedMemory<T>::destory, name, true));
+				auto ptr = boost::shared_ptr<T>(new(mmap->get_address()) T, boost::bind(SharedMemory<T>::destory, name, true));
 				return ptr;
 			}
 			catch(boost::interprocess::interprocess_exception& e)
@@ -127,12 +127,12 @@ namespace JMEngine
 		}
 
 		template<class T>
-		boost::shared_ptr<T> JMEngine::game::JME_SharedMemory<T>::create(boost::interprocess::open_only_t, const char* name, boost::interprocess::mode_t mode)
+		boost::shared_ptr<T> JMEngine::game::SharedMemory<T>::create(boost::interprocess::open_only_t, const char* name, boost::interprocess::mode_t mode)
 		{
 			try
 			{
 				//检测当前进程是否已经打开共享内存
-				if (JMEngine::game::JME_SharedMemory<T>::existMappedRegion(name))
+				if (JMEngine::game::SharedMemory<T>::existMappedRegion(name))
 				{
 					LOGE("The shared memory with name [ %s ] had been opened", name);
 					return boost::shared_ptr<T>();
@@ -151,10 +151,10 @@ namespace JMEngine
 					return boost::shared_ptr<T>();
 				}
 				//保存内存映射
-				JMEngine::game::JME_SharedMemory<T>::saveMappedRegion(name, mmap);
+				JMEngine::game::SharedMemory<T>::saveMappedRegion(name, mmap);
 
 				//直接将共享内存 转为对象， 不再调用构造函数
-				auto ptr = boost::shared_ptr<T>((T*)mmap->get_address(), boost::bind(JME_SharedMemory<T>::destory, name, false));
+				auto ptr = boost::shared_ptr<T>((T*)mmap->get_address(), boost::bind(SharedMemory<T>::destory, name, false));
 				return ptr;
 			}
 			catch(boost::interprocess::interprocess_exception& e)

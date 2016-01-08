@@ -6,7 +6,7 @@ namespace JMEngine
 {
 	namespace game
 	{
-		class JME_Time
+		class Time
 		{
 		public:
 			static bool isTimeToday(time_t t);

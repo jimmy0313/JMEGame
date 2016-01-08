@@ -7,7 +7,7 @@ namespace JMEngine
 	{
 
 
-		void JME_ServerInterface::onInit()
+		void ServerInterface::onInit()
 		{
 			_config = JMEngine::file::load_jsonfile_val("./config/conf.json");
 
@@ -17,17 +17,17 @@ namespace JMEngine
 
 			const auto& rpc = _config["rpc"];
 
-			JME_RPCManager::getInstance()->initRpcClient(rpc);
+			RPCManager::getInstance()->initRpcClient(rpc);
 
 			init();
 
 			init_();
 		}
 
-		void JME_ServerInterface::init_()
+		void ServerInterface::init_()
 		{
 			const auto& rpc = _config["rpc"];
-			JME_RPCManager::getInstance()->initRpcServer(rpc);
+			RPCManager::getInstance()->initRpcServer(rpc);
 
 			const auto& _baseConf = _config["base"];
 
@@ -36,7 +36,7 @@ namespace JMEngine
 				const auto& acceptConf = _baseConf["acceptor"];
 
 				unsigned short port = acceptConf["port"].asUInt();
-				_acceptorPtr = JMEngine::net::JME_TcpAcceptor::create(_clientHandler, port);
+				_acceptorPtr = JMEngine::net::TcpAcceptor::create(_clientHandler, port);
 
 				size_t bufferSize = acceptConf["buffer_size"].asUInt();
 				_acceptorPtr->accept(0, bufferSize);
@@ -47,7 +47,7 @@ namespace JMEngine
 			LOGI("Start server [ %s ] complete", _serverName);
 		}
 
-		void JME_ServerInterface::init()
+		void ServerInterface::init()
 		{
 
 		}

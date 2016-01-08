@@ -21,13 +21,13 @@
 #define Rnd Random::getInstance
 
 
-class JME_RandSeed
+class RandSeed
 {
 public:
-	friend class JME_Random;
-	JME_RandSeed(){}
+	friend class Random;
+	RandSeed(){}
 
-	JME_RandSeed(int prob, void* bind):
+	RandSeed(int prob, void* bind):
 		_prob(prob),
 		_bind(bind),
 		_begin(0),
@@ -42,12 +42,12 @@ protected:
 	int _end;
 };
 
-class JME_Random
+class Random
 {
 public:
 public:
-	JME_Random(void){ _randomSeed = time(NULL); };
-	virtual ~JME_Random(void){};
+	Random(void){ _randomSeed = time(NULL); };
+	virtual ~Random(void){};
 
 	int randomInt()
 	{
@@ -82,7 +82,7 @@ public:
 		return ra >= perc;
 	}
 
-	void* randomBySeeds(std::vector<JME_RandSeed>& seeds)
+	void* randomBySeeds(std::vector<RandSeed>& seeds)
 	{
 		assert(!seeds.empty());
 

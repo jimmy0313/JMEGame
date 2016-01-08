@@ -21,7 +21,7 @@ namespace JMEngine
 {
 	namespace game
 	{
-		class JME_ServerInterface
+		class ServerInterface
 		{
 		public:
 			void onInit();
@@ -53,8 +53,8 @@ namespace JMEngine
 			Json::Value _config;
 
 			// 主要用于网关服务器， 接受客户端连接
-			JME_TcpAcceptor::JME_TcpAcceptorPtr _acceptorPtr;
-			JME_NetHandler::JME_NetHandlerPtr _clientHandler;	//主动连接我的“客户端”的请求消息处理
+			TcpAcceptor::JME_TcpAcceptorPtr _acceptorPtr;
+			NetHandler::NetHandlerPtr _clientHandler;	//主动连接我的“客户端”的请求消息处理
 		};
 	}
 }

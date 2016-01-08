@@ -6,7 +6,7 @@ namespace JMEngine
 	namespace game
 	{
 
-		bool JME_Time::isTimeToday(time_t t)
+		bool Time::isTimeToday(time_t t)
 		{
 			tm timeinfo = *localtime(&t);
 
@@ -16,18 +16,18 @@ namespace JMEngine
 			return ct.date() == nt.date();
 		}
 
-		int JME_Time::todayYearday()
+		int Time::todayYearday()
 		{
 			auto nt = boost::posix_time::second_clock::local_time();
 			return nt.date().day_of_year();
 		}
 
-		tm JME_Time::localTime()
+		tm Time::localTime()
 		{
 			return boost::posix_time::to_tm(boost::posix_time::second_clock::local_time());
 		}
 
-		tm JME_Time::localTime(time_t t)
+		tm Time::localTime(time_t t)
 		{
 			tm * timeinfo = localtime(&t);
 			return *timeinfo;

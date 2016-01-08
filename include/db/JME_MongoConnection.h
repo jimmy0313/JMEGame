@@ -11,7 +11,7 @@ namespace JMEngine
 {
 	namespace db
 	{
-		class JME_MongoConnection
+		class MongoConnection
 		{
 		public:
 

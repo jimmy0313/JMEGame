@@ -31,14 +31,14 @@ namespace JMEngine
 {
 	namespace game
 	{
-		class JME_RPCException
+		class RPCException
 		{
 		public:
-			explicit JME_RPCException(const string& err):
+			explicit RPCException(const string& err):
 			_err(err)
 			{
 			}
-			explicit JME_RPCException(const char* err):
+			explicit RPCException(const char* err):
 			_err(err)
 			{
 			}
@@ -48,25 +48,25 @@ namespace JMEngine
 			string _err;
 		};
 
-		class JME_RPCManager;
+		class RPCManager;
 		class JME_RPCChannel
 		{
 		public:
-			friend class JME_RPCManager;
+			friend class RPCManager;
 
 			typedef boost::shared_ptr<JME_RPCChannel> JME_RPCChannelPtr;
 		public:
 			bool callRpcMethod(const char* method, const google::protobuf::Message* params);
-			bool callRpcMethod(const char* method, const google::protobuf::Message* params, JME_RpcCallback::RpcHandler cb);	//返回值为真 表示参数
-			bool callRpcMethod(const char* method, const google::protobuf::Message* params, JME_RpcCallback::RpcHandler cb, size_t dt, JME_RpcCallback::RpcDeadHandler dcb);	//返回值为真 表示参数
+			bool callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb);	//返回值为真 表示参数
+			bool callRpcMethod(const char* method, const google::protobuf::Message* params, RpcCallback::RpcHandler cb, size_t dt, RpcCallback::RpcDeadHandler dcb);	//返回值为真 表示参数
 
 		protected:
-			vector<JME_RpcClient::JME_RpcClientPtr> _clients;
+			vector<RpcClient::JME_RpcClientPtr> _clients;
 		};
-		class JME_RPCManager
+		class RPCManager
 		{
 		public:
-			CreateSingletonClass(JME_RPCManager);
+			CreateSingletonClass(RPCManager);
 
 			//************************************
 			// Method:    initRpcClient
@@ -89,14 +89,14 @@ namespace JMEngine
 			//************************************
 			void initRpcServer(const Json::Value& conf);
 
-			JME_RpcClient::JME_RpcClientPtr getRpcClient(const char* server);
-			JME_RpcClient::JME_RpcClientPtr getRpcClient(const string& server);
+			RpcClient::JME_RpcClientPtr getRpcClient(const char* server);
+			RpcClient::JME_RpcClientPtr getRpcClient(const string& server);
 
 			JME_RPCChannel::JME_RPCChannelPtr getRpcChannel(const string& server);
 		private:
-			map<string, JME_RpcClient::JME_RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
+			map<string, RpcClient::JME_RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
 
-			JME_RpcServer::JME_RpcServerPtr _rpcServer;
+			RpcServer::RpcServerPtr _rpcServer;
 		};
 	}
 }

@@ -7,17 +7,17 @@ namespace JMEngine
 	{
 
 
-		bool JME_MongoConnection::connect( const string& addr, string* err )
+		bool MongoConnection::connect( const string& addr, string* err )
 		{
 			return _conn.connect(addr, *err);
 		}
 
-		bool JME_MongoConnection::auth( const string& dbName, const string& userName, const string& pwd, string* err, bool digestPassword /*= true*/ )
+		bool MongoConnection::auth( const string& dbName, const string& userName, const string& pwd, string* err, bool digestPassword /*= true*/ )
 		{
 			return _conn.auth(dbName, userName, pwd, *err, digestPassword);
 		}
 
-		void JME_MongoConnection::selectJson( const string& dbName, const mongo::BSONObj& key, Json::Value* res, const mongo::BSONObj* fileds /*= NULL*/ )
+		void MongoConnection::selectJson( const string& dbName, const mongo::BSONObj& key, Json::Value* res, const mongo::BSONObj* fileds /*= NULL*/ )
 		{
 			mongo::BSONObj b = _conn.findOne(dbName, key, fileds);
 
@@ -28,7 +28,7 @@ namespace JMEngine
 			reader.parse(b.jsonString(), *res);
 		}
 
-		void JME_MongoConnection::insertBsonObj( const string& dbName, const mongo::BSONObj& obj )
+		void MongoConnection::insertBsonObj( const string& dbName, const mongo::BSONObj& obj )
 		{
 			_conn.insert(dbName, obj);
 			string err = _conn.getLastError();
@@ -39,7 +39,7 @@ namespace JMEngine
 			}
 		}
 
-		void JME_MongoConnection::updateBsonVal( const string& dbName, const mongo::BSONObj& key, const mongo::BSONObj& val, bool upsert /*= true*/, bool multi /*= false*/ )
+		void MongoConnection::updateBsonVal( const string& dbName, const mongo::BSONObj& key, const mongo::BSONObj& val, bool upsert /*= true*/, bool multi /*= false*/ )
 		{
 			_conn.update(dbName, key, val, upsert, multi);
 			string err = _conn.getLastError();
@@ -50,7 +50,7 @@ namespace JMEngine
 			}
 		}
 
-		int JME_MongoConnection::createAutoIncId( const string& dbName, const string& key, int init /*= 1*/ )
+		int MongoConnection::createAutoIncId( const string& dbName, const string& key, int init /*= 1*/ )
 		{
 			mongo::BSONObj b;  
 
@@ -81,7 +81,7 @@ namespace JMEngine
 				return bel["CurrentIdValue"].Int() + 1; 
 		}
 
-		void JME_MongoConnection::removeBson( const string& dbName, const mongo::BSONObj& key, bool justOne /*= true*/ )
+		void MongoConnection::removeBson( const string& dbName, const mongo::BSONObj& key, bool justOne /*= true*/ )
 		{
 			_conn.remove(dbName, key, justOne);
 			string err = _conn.getLastError();
@@ -91,7 +91,7 @@ namespace JMEngine
 			}
 		}
 
-		void JME_MongoConnection::findAndModify(const string& dbName, const string& table, const mongo::BSONObj& key, const mongo::BSONObj& query, bool upsert /*= true*/)
+		void MongoConnection::findAndModify(const string& dbName, const string& table, const mongo::BSONObj& key, const mongo::BSONObj& query, bool upsert /*= true*/)
 		{
 			mongo::BSONObj b;
 			mongo::BSONObjBuilder bj;  
@@ -104,7 +104,7 @@ namespace JMEngine
 			_conn.runCommand(dbName, bj.obj(), b);
 		}
 
-		void JME_MongoConnection::insertJsonObj(const string& dbName, const Json::Value& val)
+		void MongoConnection::insertJsonObj(const string& dbName, const Json::Value& val)
 		{
 			string strValue = val.toStyledString();
 			int	len = strValue.length();
@@ -120,7 +120,7 @@ namespace JMEngine
 			}
 		}
 
-		void JME_MongoConnection::updateJsonVal(const string& dbName, const mongo::BSONObj& key, const Json::Value& val, bool upsert /*= true*/, bool multi /*= false*/)
+		void MongoConnection::updateJsonVal(const string& dbName, const mongo::BSONObj& key, const Json::Value& val, bool upsert /*= true*/, bool multi /*= false*/)
 		{
 			string strValue = val.toStyledString();
 			int	len = strValue.length();
@@ -136,7 +136,7 @@ namespace JMEngine
 			}
 		}
 
-		void JME_MongoConnection::selectMoreJson(const string& dbName, const mongo::BSONObj& key, Json::Value* res)
+		void MongoConnection::selectMoreJson(const string& dbName, const mongo::BSONObj& key, Json::Value* res)
 		{
 			mongo::auto_ptr<mongo::DBClientCursor> cursor = _conn.query(dbName, key);
 			while (cursor->more()) {
@@ -149,7 +149,7 @@ namespace JMEngine
 			}
 		}
 
-		void JME_MongoConnection::dropCollection(const string& collection)
+		void MongoConnection::dropCollection(const string& collection)
 		{
 			_conn.dropCollection(collection);
 		}
