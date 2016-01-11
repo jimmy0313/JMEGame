@@ -46,15 +46,15 @@ namespace JMEngine
 			void init_();
 		public:
 
-			size_t _serverId;
-			string _serverName;	//服务器名 形如 name + server_id + idx, ps: "game-server-1-01", "chat-server-1"
+			size_t _server_id;
+			string _server_name;	//服务器名 形如 name + server_id + idx, ps: "game-server-1-01", "chat-server-1"
 
 		protected:
 			Json::Value _config;
 
 			// 主要用于网关服务器， 接受客户端连接
-			TcpAcceptor::TcpAcceptorPtr _acceptorPtr;
-			NetHandler::NetHandlerPtr _clientHandler;	//主动连接我的“客户端”的请求消息处理
+			TcpAcceptor::TcpAcceptorPtr _acceptor_ptr;
+			NetHandler::NetHandlerPtr _client_handler;	//主动连接我的“客户端”的请求消息处理
 		};
 	}
 }

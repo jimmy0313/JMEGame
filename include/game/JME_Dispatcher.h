@@ -34,7 +34,7 @@ namespace JMEngine
 			// Parameter: int msgId
 			// Parameter: MessageHandler handler
 			//************************************
-			static void regMessageHandler(int msgId, MessageHandler handler);
+			static void regMessageHandler(int msg_id, MessageHandler handler);
 
 			//************************************
 			// Method:    regMessageHandler
@@ -47,7 +47,8 @@ namespace JMEngine
 			// Parameter: MessageHandler handler
 			//************************************
 
-			static void regMessageHandler(int beginMsg, int endMsg, MessageHandler handler);
+			static void regMessageHandler(int begin_msg, int end_msg, MessageHandler handler);
+
 			//************************************
 			// Method:    execMessageHandler
 			// FullName:  JMEngine::game::Dispatcher<T>::execMessageHandler
@@ -58,54 +59,72 @@ namespace JMEngine
 			// Parameter: JMEngine::net::TcpSessionPtr session
 			// Parameter: const T & params
 			//************************************
-			static void execMessageHandler(int msgId, const T1 client, const T2 params);
+			static void execMessageHandler(int msg_id, const T1 client, const T2 params);
 
+			//************************************
+			// Method:    removeMessageHandler
+			// FullName:  JMEngine::game::DispatcherInterface<T1, T2>::removeMessageHandler
+			// Access:    public static 
+			// Returns:   void
+			// Qualifier: remove msg handler for shield client msg id
+			// Parameter: int msg_id
+			//************************************
+			static void removeMessageHandler(int msg_id);
 		private:
 			static MessageHandlerMap& getHandleMap()
 			{
-				static MessageHandlerMap handlerMap;
-				return handlerMap;
+				static MessageHandlerMap handler_map;
+				return handler_map;
 			};
 		};
 
 		template<class T1, class T2>
-		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int beginMsg, int endMsg, MessageHandler handler )
+		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int begin_msg, int end_msg, MessageHandler handler )
 		{
-			for (int i = beginMsg; i <= endMsg; i++)
+			for (int i = begin_msg; i <= end_msg; i++)
 			{
 				regMessageHandler(i, handler);
 			}
 		}
 
 		template<class T1, class T2>
-		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int msgId, MessageHandler handler )
+		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int msg_id, MessageHandler handler )
 		{
-			auto& handlerMap = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
-			auto res = handlerMap.insert(make_pair(msgId,handler)); 
+			auto& handler_map = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
+			auto res = handler_map.insert(make_pair(msg_id,handler)); 
 			if(!res.second)
 			{
-				LOGE("Message [ %d ] had been registered", msgId);
+				LOGE("Message [ %d ] had been registered", msg_id);
 				abort();
 			}
 		}
 
 		template<class T1, class T2>
-		void JMEngine::game::DispatcherInterface<T1, T2>::execMessageHandler( int msgId, const T1 client, const T2 params )
+		void JMEngine::game::DispatcherInterface<T1, T2>::execMessageHandler( int msg_id, const T1 client, const T2 params )
 		{
-			auto& handlerMap = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
-			auto it = handlerMap.find(msgId);
-			if(it != handlerMap.end())
+			auto& handler_map = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
+			auto it = handler_map.find(msg_id);
+			if(it != handler_map.end())
 			{
 				it->second(client, params);
 			}
 			else
 			{
-				LOGW("Can't find message handler for msg [ %d ]", msgId);
+				LOGW("Can't find message handler for msg [ %d ]", msg_id);
 			}
 		}
-// 
-// 		template<class T1, class T2>
-// 		typename DispatcherInterface<T1, T2>::MessageHandlerMap DispatcherInterface<T1, T2>::_handleMap;
+
+
+		template<class T1, class T2>
+		void JMEngine::game::DispatcherInterface<T1, T2>::removeMessageHandler(int msg_id)
+		{
+			auto& handler_map = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
+			auto it = handler_map.find(msg_id);
+			if ( it != handler_map.end())
+			{
+				handler_map.erase(it);
+			}
+		}
 	}
 }
 #endif // JME_Dispatcher_h__

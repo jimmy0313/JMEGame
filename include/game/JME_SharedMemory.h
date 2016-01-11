@@ -42,11 +42,11 @@ namespace JMEngine
 			static void deleteMappedRegion(const char* name);
 		private:
 			static boost::recursive_mutex _mutex;
-			static MappedRegion _MappedRegion;
+			static MappedRegion _mapped_region;
 		};
 
 		template<class T>
-		typename SharedMemory<T>::MappedRegion SharedMemory<T>::_MappedRegion;
+		typename SharedMemory<T>::MappedRegion SharedMemory<T>::_mapped_region;
 		template<class T>
 		typename boost::recursive_mutex SharedMemory<T>::_mutex;
 
@@ -55,8 +55,8 @@ namespace JMEngine
 		{
 			boost::recursive_mutex::scoped_lock lock(_mutex);
 
-			auto it = _MappedRegion.find(name);
-			if (it != _MappedRegion.end())
+			auto it = _mapped_region.find(name);
+			if (it != _mapped_region.end())
 				return true;
 			return false;
 		}
@@ -66,13 +66,13 @@ namespace JMEngine
 		{
 			boost::recursive_mutex::scoped_lock lock(_mutex);
 
-			auto it = _MappedRegion.find(name);
-			if (it != _MappedRegion.end())
+			auto it = _mapped_region.find(name);
+			if (it != _mapped_region.end())
 			{
 				auto mmap = it->second;
 				delete mmap;
 
-				_MappedRegion.erase(name);
+				_mapped_region.erase(name);
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace JMEngine
 		{
 			boost::recursive_mutex::scoped_lock lock(_mutex);
 
-			auto result = _MappedRegion.insert(make_pair(name, mmap));
+			auto result = _mapped_region.insert(make_pair(name, mmap));
 		}
 
 		template<class T>

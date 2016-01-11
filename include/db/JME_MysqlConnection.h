@@ -45,19 +45,19 @@ namespace JMEngine
 			MYSQL_RES* getRes() { return m_queryRes; }
 
 		public:
-			void setConfig(const string& ip, const string& userName, const string& pwd, const string& dbName, const int port);
+			void setConfig(const string& ip, const string& user, const string& pwd, const string& db, const int port);
 
 		private:
-			MYSQL						m_mysql;
-			MYSQL_ROW					m_row;
-			MYSQL_RES					*m_queryRes;
-			MYSQL_FIELD					*m_field;
+			MYSQL m_mysql;
+			MYSQL_ROW m_row;
+			MYSQL_RES *m_queryRes;
+			MYSQL_FIELD *m_field;
 
-			string m_ip;
-			string m_userName;
-			string m_pwd;
-			string m_dbName;
-			unsigned short m_port;
+			string _host;
+			string _user;
+			string _passwd;
+			string _db;
+			unsigned short _port;
 		};
 	}
 }

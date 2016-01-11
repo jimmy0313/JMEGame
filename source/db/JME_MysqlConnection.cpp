@@ -35,11 +35,11 @@ namespace JMEngine
 		///////////////////////////////////////////////////////////////////////////////
 		bool MysqlConnector::connect()
 		{
-			MYSQL *mysql = mysql_real_connect( &m_mysql, m_ip.c_str(), m_userName.c_str(), m_pwd.c_str(), m_dbName.c_str(), m_port, NULL, 0 );
+			MYSQL *mysql = mysql_real_connect( &m_mysql, _host.c_str(), _user.c_str(), _passwd.c_str(), _db.c_str(), _port, NULL, 0 );
 		
 			if( mysql )
 			{
-				LOGI("Connect to mysql [ %s:%d==>%s ] succeed", m_ip, m_port, m_dbName);
+				LOGI("Connect to mysql [ %s:%d==>%s ] succeed", _host, _port, _db);
 				// Set the utf8 query charset
 				int ret = mysql_real_query(&m_mysql,"set NAMES'utf8'",(unsigned int) strlen("set NAMES'utf8'"));
 				if( ret )
@@ -50,7 +50,7 @@ namespace JMEngine
 			}
 			else
 			{
-				LOGE("Connect to mysql [ %s:%d==>%s ] failed, error ==> [ %d ]", m_ip, m_port, m_dbName, mysql_errno(&m_mysql));
+				LOGE("Connect to mysql [ %s:%d==>%s ] failed, error ==> [ %d ]", _host, _port, _db, mysql_errno(&m_mysql));
 				
 				return false;
 			}
@@ -168,13 +168,13 @@ namespace JMEngine
 			return true;	
 		}
 		
-		void MysqlConnector::setConfig( const string& ip, const string& userName, const string& pwd, const string& dbName, const int port )
+		void MysqlConnector::setConfig( const string& ip, const string& user, const string& pwd, const string& db, const int port )
 		{
-			m_ip = ip;
-			m_userName = userName;
-			m_pwd = pwd;
-			m_dbName = dbName;
-			m_port = port;
+			_host = ip;
+			_user = user;
+			_passwd = pwd;
+			_db = db;
+			_port = port;
 		}
 	}
 }

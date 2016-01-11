@@ -37,10 +37,10 @@ public: \
 #define CreateSingletonClass(varName) \
 private:	\
 	varName(){}	\
-	virtual ~varName(){} \
 	varName(const varName&){} \
 	varName& operator = (const varName&) {} \
 public: \
+	virtual ~varName(){} \
 	static varName*	getInstance() \
 	{ \
 		static varName* _pInstance = new varName; \

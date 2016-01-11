@@ -94,9 +94,9 @@ namespace JMEngine
 
 			RPCChannel::RPCChannelPtr getRpcChannel(const string& server);
 		private:
-			map<string, RpcClient::RpcClientPtr> _rpcClient;	//rpc客户端, 用于调用远程服务
+			map<string, RpcClient::RpcClientPtr> _rpc_client_map;	//rpc客户端, 用于调用远程服务
 
-			RpcServer::RpcServerPtr _rpcServer;
+			RpcServer::RpcServerPtr _rpc_server;
 		};
 	}
 }

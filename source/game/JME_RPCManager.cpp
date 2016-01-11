@@ -13,14 +13,14 @@ namespace JMEngine
 			for (const auto& c : clientConf)
 			{
 				auto rpc = RpcClient::create(c["ip"].asString(), c["port"].asString(), c["reconnect"].asUInt(), c["buffer_size"].asUInt());
-				_rpcClient[c["name"].asString()] = rpc;
+				_rpc_client_map[c["name"].asString()] = rpc;
 			}
 		}
 
 		RpcClient::RpcClientPtr RPCManager::getRpcClient(const char* server)
 		{
-			auto rpc = _rpcClient.find(server);
-			if (rpc == _rpcClient.end())
+			auto rpc = _rpc_client_map.find(server);
+			if (rpc == _rpc_client_map.end())
 			{
 				string err = JMEngine::tools::createString("Can't find rpc [ %s ]", server);
 				throw RPCException(err);
@@ -39,14 +39,14 @@ namespace JMEngine
 			if (conf.isMember("server"))
 			{
 				auto& serverConf = conf["server"];
-				_rpcServer = RpcServer::create(RpcHandlerInterface::create(), serverConf["port"].asUInt(), serverConf["buffer_size"].asUInt());
+				_rpc_server = RpcServer::create(RpcHandlerInterface::create(), serverConf["port"].asUInt(), serverConf["buffer_size"].asUInt());
 			}
 		}
 
 		JMEngine::game::RPCChannel::RPCChannelPtr RPCManager::getRpcChannel(const string& server)
 		{
 			auto channel = boost::make_shared<RPCChannel>();
-			for (auto it = _rpcClient.begin(); it != _rpcClient.end(); ++it)
+			for (auto it = _rpc_client_map.begin(); it != _rpc_client_map.end(); ++it)
 			{
 				if (it->first.find(server))
 					continue;

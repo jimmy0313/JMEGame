@@ -46,7 +46,7 @@ class Random
 {
 public:
 public:
-	Random(void){ _randomSeed = time(NULL); };
+	Random(void){ _random_seed = time(NULL); };
 	virtual ~Random(void){};
 
 	int randomInt()
@@ -54,12 +54,12 @@ public:
 		boost::posix_time::ptime time = boost::posix_time::microsec_clock::local_time();
 		boost::posix_time::time_duration duration( time.time_of_day() );
 
-		boost::mt19937 gen(duration.total_nanoseconds() + _randomSeed);
+		boost::mt19937 gen(duration.total_nanoseconds() + _random_seed);
 		boost::uniform_int<> dist(0, INT_MAX);
 
 		boost::variate_generator<boost::mt19937, boost::uniform_int<> > die(gen, dist);
 
-		return _randomSeed = die();
+		return _random_seed = die();
 	}
 	int randomInt(int start, int end)
 	{
@@ -68,12 +68,12 @@ public:
 		boost::posix_time::ptime time = boost::posix_time::microsec_clock::local_time();
 		boost::posix_time::time_duration duration( time.time_of_day() );
 
-		boost::mt19937 gen(duration.total_nanoseconds() + _randomSeed);
+		boost::mt19937 gen(duration.total_nanoseconds() + _random_seed);
 		boost::uniform_int<> dist(start, end);
 
 		boost::variate_generator<boost::mt19937, boost::uniform_int<> > die(gen, dist);
 
-		return _randomSeed = die();
+		return _random_seed = die();
 	}
 
 	bool randomGreater(int perc)
@@ -107,6 +107,6 @@ public:
 		return nullptr;
 	}
 private:
-	time_t _randomSeed;
+	time_t _random_seed;
 };
 #endif // JME_Random_h__

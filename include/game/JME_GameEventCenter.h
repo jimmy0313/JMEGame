@@ -245,7 +245,7 @@ namespace JMEngine
 
 		protected:
 			EventMap _events;
-			boost::recursive_mutex	_eventMutex;
+			boost::recursive_mutex	_mutex;
 		};
 	}
 }

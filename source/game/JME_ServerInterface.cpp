@@ -12,8 +12,8 @@ namespace JMEngine
 			_config = JMEngine::file::load_jsonfile_val("./config/conf.json");
 
 			const auto& _baseConf = _config["base"];
-			_serverId = _baseConf["server_id"].asInt();
-			_serverName = _baseConf["server_name"].asString();
+			_server_id = _baseConf["server_id"].asInt();
+			_server_name = _baseConf["server_name"].asString();
 
 			const auto& rpc = _config["rpc"];
 
@@ -36,15 +36,15 @@ namespace JMEngine
 				const auto& acceptConf = _baseConf["acceptor"];
 
 				unsigned short port = acceptConf["port"].asUInt();
-				_acceptorPtr = JMEngine::net::TcpAcceptor::create(_clientHandler, port);
+				_acceptor_ptr = JMEngine::net::TcpAcceptor::create(_client_handler, port);
 
 				size_t bufferSize = acceptConf["buffer_size"].asUInt();
-				_acceptorPtr->accept(0, bufferSize);
+				_acceptor_ptr->accept(0, bufferSize);
 
 				LOGI("Start accept connector on port[ %s ]", port);
 			}
 
-			LOGI("Start server [ %s ] complete", _serverName);
+			LOGI("Start server [ %s ] complete", _server_name);
 		}
 
 		void ServerInterface::init()
