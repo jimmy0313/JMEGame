@@ -20,41 +20,45 @@
 #endif
 
 using namespace std;
-using namespace JMEngine::db;
 
-class MysqlConnector
+namespace JMEngine
 {
-public:
-	
-public:
-	MysqlConnector();
-	~MysqlConnector();
+	namespace db
+	{
+		class MysqlConnector
+		{
+		public:
 
-	bool connect();
-	bool lockTable( const char* table, const char* priority );
-	bool unlockTable();
-	bool query( const char *sql );
-	bool isResEmpty();
-	bool connected();
+		public:
+			MysqlConnector();
+			~MysqlConnector();
 
-	MYSQL_RES* genRes();
-	MYSQL* get_mysql();
-	MYSQL_RES* getRes() { return m_queryRes; }
+			bool connect();
+			bool lockTable( const char* table, const char* priority );
+			bool unlockTable();
+			bool query( const char *sql );
+			bool isResEmpty();
+			bool connected();
 
-public:
-	void setConfig(const string& ip, const string& userName, const string& pwd, const string& dbName, const int port);
+			MYSQL_RES* genRes();
+			MYSQL* get_mysql();
+			MYSQL_RES* getRes() { return m_queryRes; }
 
-private:
-	MYSQL						m_mysql;
-	MYSQL_ROW					m_row;
-	MYSQL_RES					*m_queryRes;
-	MYSQL_FIELD					*m_field;
+		public:
+			void setConfig(const string& ip, const string& userName, const string& pwd, const string& dbName, const int port);
 
-	string m_ip;
-	string m_userName;
-	string m_pwd;
-	string m_dbName;
-	unsigned short m_port;
-};
+		private:
+			MYSQL						m_mysql;
+			MYSQL_ROW					m_row;
+			MYSQL_RES					*m_queryRes;
+			MYSQL_FIELD					*m_field;
 
+			string m_ip;
+			string m_userName;
+			string m_pwd;
+			string m_dbName;
+			unsigned short m_port;
+		};
+	}
+}
 #endif // JME_MysqlConnection_h__
