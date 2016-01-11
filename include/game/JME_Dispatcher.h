@@ -61,7 +61,11 @@ namespace JMEngine
 			static void execMessageHandler(int msgId, const T1 client, const T2 params);
 
 		private:
-			static MessageHandlerMap _handleMap;
+			static MessageHandlerMap& getHandleMap()
+			{
+				static MessageHandlerMap handlerMap;
+				return handlerMap;
+			};
 		};
 
 		template<class T1, class T2>
@@ -76,7 +80,8 @@ namespace JMEngine
 		template<class T1, class T2>
 		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int msgId, MessageHandler handler )
 		{
-			auto res = _handleMap.insert(make_pair(msgId,handler)); 
+			auto& handlerMap = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
+			auto res = handlerMap.insert(make_pair(msgId,handler)); 
 			if(!res.second)
 			{
 				LOGE("Message [ %d ] had been registered", msgId);
@@ -87,8 +92,9 @@ namespace JMEngine
 		template<class T1, class T2>
 		void JMEngine::game::DispatcherInterface<T1, T2>::execMessageHandler( int msgId, const T1 client, const T2 params )
 		{
-			auto it = _handleMap.find(msgId);
-			if(it != _handleMap.end())
+			auto& handlerMap = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
+			auto it = handlerMap.find(msgId);
+			if(it != handlerMap.end())
 			{
 				it->second(client, params);
 			}
@@ -97,9 +103,9 @@ namespace JMEngine
 				LOGW("Can't find message handler for msg [ %d ]", msgId);
 			}
 		}
-
-		template<class T1, class T2>
-		typename DispatcherInterface<T1, T2>::MessageHandlerMap DispatcherInterface<T1, T2>::_handleMap;
+// 
+// 		template<class T1, class T2>
+// 		typename DispatcherInterface<T1, T2>::MessageHandlerMap DispatcherInterface<T1, T2>::_handleMap;
 	}
 }
 #endif // JME_Dispatcher_h__
