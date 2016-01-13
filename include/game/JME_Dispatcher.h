@@ -21,7 +21,7 @@ namespace JMEngine
 		{
 		public:
 			typedef boost::shared_ptr<DispatcherInterface> DispatcherPtr;
-			typedef boost::function<void(const T1 client/*指定客户端的代表，可以是一个session， 也可以是一个id，或者一个字符串*/, const T2 params)> MessageHandler;
+			typedef boost::function<void(T1 client/*指定客户端的代表，可以是一个session， 也可以是一个id，或者一个字符串*/, T2 params)> MessageHandler;
 			typedef map<int, MessageHandler> MessageHandlerMap;
 		public:
 
@@ -59,7 +59,7 @@ namespace JMEngine
 			// Parameter: JMEngine::net::TcpSessionPtr session
 			// Parameter: const T & params
 			//************************************
-			static void execMessageHandler(int msg_id, const T1 client, const T2 params);
+			static void execMessageHandler(int msg_id, T1 client, T2 params);
 
 			//************************************
 			// Method:    removeMessageHandler
@@ -100,7 +100,7 @@ namespace JMEngine
 		}
 
 		template<class T1, class T2>
-		void JMEngine::game::DispatcherInterface<T1, T2>::execMessageHandler( int msg_id, const T1 client, const T2 params )
+		void JMEngine::game::DispatcherInterface<T1, T2>::execMessageHandler( int msg_id, T1 client, T2 params )
 		{
 			auto& handler_map = JMEngine::game::DispatcherInterface<T1, T2>::getHandleMap();
 			auto it = handler_map.find(msg_id);
