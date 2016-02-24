@@ -16,7 +16,7 @@
 #include "boost/interprocess/mapped_region.hpp"
 #include "boost/thread/recursive_mutex.hpp"
 
-#include "JME_GLog.h"
+#include "log/JME_GLog.h"
 
 using namespace std;
 namespace JMEngine
@@ -152,9 +152,18 @@ namespace JMEngine
 				}
 				//保存内存映射
 				JMEngine::game::SharedMemory<T>::saveMappedRegion(name, mmap);
-
-				//直接将共享内存 转为对象， 不再调用构造函数
+				
+#ifdef EXPORT_TO_LUA
+				//如果对象需要导入到lua中， 采用下面的写法，会导致错误, access violation no rtti data, 所以采用此种写法
+				static T* temp_memory = new T;
+				*temp_memory = *(T*)(mmap->get_address());
+				auto ptr = boost::shared_ptr<T>(new(mmap->get_address()) T, boost::bind(SharedMemory<T>::destory, name, false));
+				*ptr = *temp_memory;
+#else
+				//直接将共享内存 转为对象， 不调用构造函数， 避免构造函数修改内存数据
 				auto ptr = boost::shared_ptr<T>((T*)mmap->get_address(), boost::bind(SharedMemory<T>::destory, name, false));
+#endif // EXPORT_LUA
+
 				return ptr;
 			}
 			catch(boost::interprocess::interprocess_exception& e)
