@@ -30,14 +30,14 @@ namespace JMEngine
 			typedef map<string, boost::interprocess::mapped_region*> MappedRegion;
 
 			//主要用于cache, 用于负责cache的进程 创建共享内存 设置正确数据(如 从内存读取)
-			static boost::shared_ptr<T> create(boost::interprocess::create_only_t, const char* name, boost::interprocess::mode_t mode);
+			static boost::shared_ptr<T> create(boost::interprocess::create_only_t, const string& name, boost::interprocess::mode_t mode);
 
 			//主要用于logic，用于logic进程， 对数据进行修改
-			static boost::shared_ptr<T> create(boost::interprocess::open_only_t, const char* name, boost::interprocess::mode_t mode);
+			static boost::shared_ptr<T> create(boost::interprocess::open_only_t, const string& name, boost::interprocess::mode_t mode);
 
 			static bool existMappedRegion(const char* name);
 		private:
-			static void destory(const char* name, bool remove_memory);
+			static void destory(string name, bool remove_memory);
 			static void saveMappedRegion(const char* name, boost::interprocess::mapped_region* mmap);
 			static void deleteMappedRegion(const char* name);
 		private:
@@ -85,33 +85,33 @@ namespace JMEngine
 		}
 
 		template<class T>
-		void JMEngine::game::SharedMemory<T>::destory(const char* name, bool remove_memory)
+		void JMEngine::game::SharedMemory<T>::destory(string name, bool remove_memory)
 		{
-			JMEngine::game::SharedMemory<T>::deleteMappedRegion(name);
+			JMEngine::game::SharedMemory<T>::deleteMappedRegion(name.c_str());
 			if (remove_memory)
 			{
-				boost::interprocess::shared_memory_object::remove(name);
+				boost::interprocess::shared_memory_object::remove(name.c_str());
 			}
 		}
 
 		template<class T>
-		boost::shared_ptr<T> JMEngine::game::SharedMemory<T>::create(boost::interprocess::create_only_t, const char* name, boost::interprocess::mode_t mode)
+		boost::shared_ptr<T> JMEngine::game::SharedMemory<T>::create(boost::interprocess::create_only_t, const string& name, boost::interprocess::mode_t mode)
 		{
 			try
 			{
 				//移除可能存在老共享内存
-				JMEngine::game::SharedMemory<T>::deleteMappedRegion(name);
-				boost::interprocess::shared_memory_object::remove(name);
+				JMEngine::game::SharedMemory<T>::deleteMappedRegion(name.c_str());
+				boost::interprocess::shared_memory_object::remove(name.c_str());
 
 				//创建新的共享内存, 并分配大小
-				boost::interprocess::shared_memory_object shm(boost::interprocess::create_only, name, mode);
+				boost::interprocess::shared_memory_object shm(boost::interprocess::create_only, name.c_str(), mode);
 				shm.truncate(sizeof(T));
 
 				//创建内存映射
 				auto mmap = new boost::interprocess::mapped_region(shm, mode);
 
 				//保存内存映射信息
-				JMEngine::game::SharedMemory<T>::saveMappedRegion(name, mmap);
+				JMEngine::game::SharedMemory<T>::saveMappedRegion(name.c_str(), mmap);
 
 				//通过共享内存 创建shared_ptr<T>对象
 				//共享内存， 谁创建， 谁销毁
@@ -127,18 +127,18 @@ namespace JMEngine
 		}
 
 		template<class T>
-		boost::shared_ptr<T> JMEngine::game::SharedMemory<T>::create(boost::interprocess::open_only_t, const char* name, boost::interprocess::mode_t mode)
+		boost::shared_ptr<T> JMEngine::game::SharedMemory<T>::create(boost::interprocess::open_only_t, const string& name, boost::interprocess::mode_t mode)
 		{
 			try
 			{
 				//检测当前进程是否已经打开共享内存
-				if (JMEngine::game::SharedMemory<T>::existMappedRegion(name))
+				if (JMEngine::game::SharedMemory<T>::existMappedRegion(name.c_str()))
 				{
 					LOGE("The shared memory with name [ %s ] had been opened", name);
 					return boost::shared_ptr<T>();
 				}
 				//打开共享内存
-				boost::interprocess::shared_memory_object shm(boost::interprocess::open_only, name, mode);
+				boost::interprocess::shared_memory_object shm(boost::interprocess::open_only, name.c_str(), mode);
 
 				//创建内存映射
 				auto mmap = new boost::interprocess::mapped_region(shm, mode);
@@ -151,7 +151,7 @@ namespace JMEngine
 					return boost::shared_ptr<T>();
 				}
 				//保存内存映射
-				JMEngine::game::SharedMemory<T>::saveMappedRegion(name, mmap);
+				JMEngine::game::SharedMemory<T>::saveMappedRegion(name.c_str(), mmap);
 				
 #ifdef EXPORT_TO_LUA
 				//如果对象需要导入到lua中， 采用下面的写法，会导致错误, access violation no rtti data, 所以采用此种写法
