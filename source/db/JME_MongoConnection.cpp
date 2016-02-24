@@ -55,9 +55,9 @@ namespace JMEngine
 			mongo::BSONObj b;  
 
 			mongo::BSONObjBuilder bj;
-			bj.append("findAndModify","AutoIncrement");  
+			bj.append("findAndModify","auto_increment_id");  
 			bj.append("query",BSON("_id"<<key));
-			bj.append("update",BSON("$inc"<<BSON("CurrentIdValue"<<1)));  
+			bj.append("update",BSON("$inc"<<BSON("value"<<1)));  
 			bj.append("upsert", true);
 
 			_conn.runCommand(dbName, bj.obj(), b);  
@@ -76,9 +76,9 @@ namespace JMEngine
 				return init;
 
 			if(bel.type() == mongo::NumberDouble)  
-				return (int)bel["CurrentIdValue"].Double() + 1;  
+				return (int)bel["value"].Double() + 1;  
 			else  
-				return bel["CurrentIdValue"].Int() + 1; 
+				return bel["value"].Int() + 1; 
 		}
 
 		void MongoConnection::removeBson( const string& dbName, const mongo::BSONObj& key, bool justOne /*= true*/ )
