@@ -70,13 +70,34 @@ namespace JMEngine
 			// Parameter: int msg_id
 			//************************************
 			static void removeMessageHandler(int msg_id);
+
+			//************************************
+			// Method:    setDefaultHandler
+			// FullName:  JMEngine::game::DispatcherInterface<T1, T2>::setDefaultHandler
+			// Access:    public static 
+			// Returns:   void
+			// Qualifier: use this function to handle msg when we don't find any handler for this msg
+			// Parameter: MessageHandler handler
+			//************************************
+			static void setDefaultHandler(MessageHandler handler);
 		private:
 			static MessageHandlerMap& getHandleMap()
 			{
 				static MessageHandlerMap handler_map;
 				return handler_map;
 			};
+			
+			static MessageHandler _default_handler;
 		};
+
+		template<class T1, class T2>
+		typename JMEngine::game::DispatcherInterface<T1, T2>::MessageHandler JMEngine::game::DispatcherInterface<T1, T2>::_default_handler;
+
+		template<class T1, class T2>
+		void JMEngine::game::DispatcherInterface<T1, T2>::setDefaultHandler(MessageHandler handler)
+		{
+			_default_handler = handler;
+		}
 
 		template<class T1, class T2>
 		void JMEngine::game::DispatcherInterface<T1, T2>::regMessageHandler( int begin_msg, int end_msg, MessageHandler handler )
@@ -110,7 +131,14 @@ namespace JMEngine
 			}
 			else
 			{
-				LOGW("Can't find message handler for msg [ %d ]", msg_id);
+				if (_default_handler)
+				{
+					_default_handler(client, params);
+				}
+				else
+				{
+					LOGW("Can't find message handler for msg [ %d ]", msg_id);
+				}
 			}
 		}
 
